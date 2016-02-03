@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core'
-import {Ewi} from './ewi'
+import {Ewi, allCombinations} from './ewi'
 
 
 @Component({
@@ -13,6 +13,10 @@ import {Ewi} from './ewi'
 })
 export class AppComponent { 
     ewi = new Ewi(0b1111111110111)
+    
+    constructor() {
+        allCombinations(this.ewi)
+    }
     
     render() {
         
@@ -32,6 +36,7 @@ export class AppComponent {
             rpinky3: ${this.ewi.rpinky3.pressed}
 
             ${this.ewi.note}
+            ${this.ewi.id}
         `
     }
 }

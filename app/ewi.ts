@@ -33,6 +33,10 @@ export class Ewi {
         
     }
     
+    get id(): string {
+        return this.pressedKeys.reduce((bitmask, key) => bitmask + (2 ** key.index), 0).toString(2)
+    }
+    
     get pitch() {
         return this.basePitch + this.keys
             .filter(key => key.pressed)
@@ -77,6 +81,7 @@ export class Ewi {
     }
     
     get allRightPinkyKeysPressed(): boolean {
+        // NOTE: subset of hasNeutralizingKeys
         return this.rpinky1.pressed && this.rpinky2.pressed && this.rpinky3.pressed
     }
 }
@@ -107,8 +112,41 @@ function midiToPitch() {
 }
 
 
-function allCombinations(ewi) {
-    // TODO: compute all combinations    
+export function allCombinations(ewi) {
+    let fingerings = []
+    let numCombinations = 2 ** ewi.keys.length;
+    
+    console.time('compute all combinations')
+    
+    for (let i=0; i < numCombinations; i++) {
+        let bitmask = i;
+        fingerings.push(new Ewi(bitmask))
+    }
+    
+    console.timeEnd('compute all combinations')
+    console.log('combinations: ', fingerings.length)
+   
+    console.time('filter out redundant')
+    fingerings = fingerings.filter(ewi => !ewi.redundant)
+    console.timeEnd('filter out redundant')
+    console.log('combinations: ', fingerings.length)
+    
+    console.time('filter out allRightPinkyKeysPressed')
+    fingerings = fingerings.filter(ewi => !ewi.allRightPinkyKeysPressed)
+    console.timeEnd('filter out allRightPinkyKeysPressed')
+    console.log('combinations: ', fingerings.length)
+    
+    console.time('filter out neutralizing keys')
+    fingerings = fingerings.filter(ewi => !ewi.hasNeutralizingKeys)
+    console.timeEnd('filter out neutralizing keys')
+    console.log('combinations: ', fingerings.length)
+    
+    // TODO: group by note (discern octaves!)
+    
+    // TODO: order by 'ease'
+    // - least amount of pressed keys?
+}
 
-    // TODO: filter out equivalent combinations that are supersets of others (...when bis/rside are inactive)
+export function defaultFingerings() {
+    // TODO
 }
