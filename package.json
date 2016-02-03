@@ -1,6 +1,6 @@
 {
   "name": "EWI",
-  "version": "0.1",
+  "version": "0.1.0",
   "scripts": {
     "tsc": "tsc",
     "tsc:w": "tsc -w",
