@@ -1,3 +1,5 @@
+/// <reference path="../typings/tsd.d.ts" />
+
 export class Ewi {
     basePitch = 13 // C# 
     
