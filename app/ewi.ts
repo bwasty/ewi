@@ -115,15 +115,10 @@ function midiToPitch() {
 
 
 export function allCombinations(ewi) {
-    let fingerings = []
-    let numCombinations = 2 ** ewi.keys.length;
-    
     console.time('compute all combinations')
     
-    for (let i=0; i < numCombinations; i++) {
-        let bitmask = i;
-        fingerings.push(new Ewi(bitmask))
-    }
+    let numCombinations = 2 ** ewi.keys.length;
+    let fingerings = _.range(numCombinations).map(bitmask => new Ewi(bitmask))
     
     console.timeEnd('compute all combinations')
     console.log('combinations: ', fingerings.length)
@@ -143,10 +138,17 @@ export function allCombinations(ewi) {
     console.timeEnd('filter out neutralizing keys')
     console.log('combinations: ', fingerings.length)
     
-    // TODO: group by note (discern octaves!)
+    console.time('group by pitch')
+    let fingeringsByPitch = _.groupBy(fingerings, ewi => ewi.pitch)
+    console.log(fingeringsByPitch)
+    console.timeEnd('group by pitch')
     
-    // TODO: order by 'ease'
-    // - least amount of pressed keys?
+    for (let pitch in fingeringsByPitch) {
+        fingeringsByPitch[pitch] = _.sortBy(fingeringsByPitch[pitch], fingering => fingering.pressedKeys.length)
+        
+        console.log(fingeringsByPitch[pitch][0].note)
+        console.log(fingeringsByPitch[pitch].slice(0,5).map(ewi => `${ewi.id}, ${ewi.pressedKeys.length}]`))
+    }
 }
 
 export function defaultFingerings() {
