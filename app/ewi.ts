@@ -149,6 +149,11 @@ export function allCombinations(ewi) {
         console.log(fingeringsByPitch[pitch][0].note)
         console.log(fingeringsByPitch[pitch].slice(0,5).map(ewi => `${ewi.id}, ${ewi.pressedKeys.length}]`))
     }
+    
+   // TODO!: further/different sort criteria...
+   // - distance to default fingering (smaller = better)
+   // - number of 'gaps' between pressed keys?? (smaller = better)
+   // - penalty for bis key?
 }
 
 export function defaultFingerings() {
