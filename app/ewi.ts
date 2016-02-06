@@ -55,6 +55,8 @@ export class Ewi {
     get note() {
         // TODO: take Octave into account
         let pitch = this.pitch % 12
+        if (pitch < 0)
+            pitch += 12
         switch (pitch) {
             case 0: return 'C'
             case 1: return 'C#'
@@ -68,6 +70,7 @@ export class Ewi {
             case 9: return 'A'
             case 10: return 'A#'
             case 11: return 'B'
+            default: return pitch.toString()
         }
     }
     
@@ -161,6 +164,9 @@ export function allCombinations(ewi) {
    // - distance to default fingering (smaller = better)
    // - number of 'gaps' between pressed keys?? (smaller = better)
    // - penalty for bis key?
+   
+   
+   return fingeringsByPitch
 }
 
 export function defaultFingerings() {

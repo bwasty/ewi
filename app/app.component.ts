@@ -1,4 +1,5 @@
 import {Component} from 'angular2/core'
+import {NgFor} from 'angular2/common'
 import {Ewi, allCombinations} from './ewi'
 
 // import {ButtonCheckbox} from 'ng2-bootstrap/ng2-bootstrap';
@@ -27,14 +28,20 @@ const DEFAULT_BITMASK = '0011111110111'
         <pre>
             {{render()}}
         </pre>
+        Alternate fingerings: {{fingeringsByPitch[ewi.pitch].length - 1}} <br>
+        Top 10: <br>
+        <div *ngFor="#ewi of fingeringsByPitch[ewi.pitch].slice(0, 10)">{{ ewi.id }}</div>
+        
+        
     `,
     // directives: [ButtonCheckbox]
 })
 export class AppComponent { 
     ewi = new Ewi(parseInt(DEFAULT_BITMASK, 2))
+    fingeringsByPitch
     
     constructor() {
-        allCombinations(this.ewi)
+        this.fingeringsByPitch = allCombinations(this.ewi)
     }
     
     changeBitmask(bitmask){
