@@ -1,5 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 
+const NUM_KEYS = 13
+
 export class Ewi {
     basePitch = 13 // C# 
     
@@ -26,6 +28,8 @@ export class Ewi {
     ]
     
     constructor(bitmask?: number) {
+        assert(this.keys.length === NUM_KEYS)
+        
         if (!bitmask)
             return
         
@@ -36,7 +40,9 @@ export class Ewi {
     }
     
     get id(): string {
-        return this.pressedKeys.reduce((bitmask, key) => bitmask + (2 ** key.index), 0).toString(2)
+        let bitmask = this.pressedKeys.reduce((bitmask, key) => bitmask + (2 ** key.index), 0).toString(2)
+        _.times(NUM_KEYS - bitmask.length, () => bitmask = '0' + bitmask)
+        return bitmask
     }
     
     get pitch() {
@@ -47,6 +53,7 @@ export class Ewi {
     }
     
     get note() {
+        // TODO: take Octave into account
         let pitch = this.pitch % 12
         switch (pitch) {
             case 0: return 'C'
@@ -118,7 +125,7 @@ export function allCombinations(ewi) {
     console.time('compute all combinations')
     
     let numCombinations = 2 ** ewi.keys.length;
-    let fingerings = _.range(numCombinations).map(bitmask => new Ewi(bitmask))
+    let fingerings = _.times(numCombinations, bitmask => new Ewi(bitmask))
     
     console.timeEnd('compute all combinations')
     console.log('combinations: ', fingerings.length)

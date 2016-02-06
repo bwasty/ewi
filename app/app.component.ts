@@ -1,6 +1,19 @@
 import {Component} from 'angular2/core'
 import {Ewi, allCombinations} from './ewi'
 
+// import {ButtonCheckbox} from 'ng2-bootstrap/ng2-bootstrap';
+
+            // <label class="btn btn-primary" [(ngModel)]="ewi.bis.pressed" btnCheckbox>Bis</label>
+            // <label class="btn btn-primary" [(ngModel)]="ewi.lh2.pressed" btnCheckbox>LH2</label>
+            
+        //             <div class="btn-group-vertical">
+        //     <label class="btn btn-primary" [(ngModel)]="bar"
+        //             btnCheckbox>LH1</label>
+        // </div>
+        
+        // <div class="btn-group-vertical">
+        //      <label class="btn btn-primary" [(ngModel)]="bar">LH1</label>
+        //  </div>
 
 @Component({
     selector: 'ewi-app',
@@ -9,10 +22,12 @@ import {Ewi, allCombinations} from './ewi'
         <pre>
             {{render()}}
         </pre>
-    `
+    `,
+    // directives: [ButtonCheckbox]
 })
 export class AppComponent { 
-    ewi = new Ewi(0b1111111110111)
+    ewi = new Ewi(0b0011111110111)
+    inputBitmask = '00000000000'
     
     constructor() {
         allCombinations(this.ewi)
