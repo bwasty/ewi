@@ -14,11 +14,16 @@ import {Ewi, allCombinations} from './ewi'
         // <div class="btn-group-vertical">
         //      <label class="btn btn-primary" [(ngModel)]="bar">LH1</label>
         //  </div>
+        
+const DEFAULT_BITMASK = '0011111110111'
 
 @Component({
     selector: 'ewi-app',
     template: `
         <h2>EWI Fingering Tool</h2>
+        <input type="text" class="form-control" #input (keyup)="changeBitmask(input.value)"
+         value=${DEFAULT_BITMASK}>
+
         <pre>
             {{render()}}
         </pre>
@@ -26,15 +31,17 @@ import {Ewi, allCombinations} from './ewi'
     // directives: [ButtonCheckbox]
 })
 export class AppComponent { 
-    ewi = new Ewi(0b0011111110111)
-    inputBitmask = '00000000000'
+    ewi = new Ewi(parseInt(DEFAULT_BITMASK, 2))
     
     constructor() {
         allCombinations(this.ewi)
     }
     
-    render() {
-        
+    changeBitmask(bitmask){
+        this.ewi = new Ewi(parseInt(bitmask, 2))
+    }
+    
+    render() { 
         return `
             lh1: ${this.ewi.lh1.pressed}
             bis: ${this.ewi.bis.pressed}
@@ -50,8 +57,8 @@ export class AppComponent {
             rpinky2: ${this.ewi.rpinky2.pressed}
             rpinky3: ${this.ewi.rpinky3.pressed}
 
-            ${this.ewi.note}
-            ${this.ewi.id}
+            Note: ${this.ewi.note}
+            Bitmask: ${this.ewi.id}
         `
     }
 }
