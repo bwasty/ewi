@@ -1,6 +1,0 @@
-{
-  "ambientDependencies": {
-    "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#6697d6f7dadbf5773cb40ecda35a76027e0783b2",
-    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#f696b8c0c2d6e2a31c794a3752f68de85dce4c2b"
-  }
-}
