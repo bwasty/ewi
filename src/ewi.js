@@ -1,4 +1,4 @@
-/// <reference path="../typings/main.d.ts" />
+import _ from 'lodash'
 
 const NUM_KEYS = 13
 
@@ -27,8 +27,9 @@ export class Ewi {
         this.rside, this.rh1, this.rh2, this.rh3, this.rpinky1, this.rpinky2, this.rpinky3
     ]
     
-    constructor(bitmask?: number) {
-        assert(this.keys.length === NUM_KEYS)
+    constructor(bitmask) {
+        if (this.keys.length !== NUM_KEYS)
+            console.error('Assert failed.')
         
         if (!bitmask)
             return
@@ -39,7 +40,7 @@ export class Ewi {
         
     }
     
-    get id(): string {
+    get id() {
         let bitmask = this.pressedKeys.reduce((bitmask, key) => bitmask + (2 ** key.index), 0).toString(2)
         _.times(NUM_KEYS - bitmask.length, () => bitmask = '0' + bitmask)
         return bitmask
@@ -74,7 +75,7 @@ export class Ewi {
         }
     }
     
-    distance(other: Ewi) {
+    distance(other) {
         // TODO: key-wise difference
     }
     
@@ -82,30 +83,35 @@ export class Ewi {
         return this.keys.filter(k => k.pressed)
     }
     
-    get redundant(): boolean {
+    get redundant() {
         return this.keys.some(k => k.redundant)
     }
     
-    get hasNeutralizingKeys(): boolean {
+    get hasNeutralizingKeys() {
         let pressed = this.pressedKeys
-        let hasKeyWithPitch = x => pressed.some(k => k.pitch == x)
+        let hasKeyWithPitch = x => pressed.some(k => k.pitch === x)
         return hasKeyWithPitch(1) && hasKeyWithPitch(-1)
     }
     
-    get allRightPinkyKeysPressed(): boolean {
+    get allRightPinkyKeysPressed() {
         // NOTE: subset of hasNeutralizingKeys
         return this.rpinky1.pressed && this.rpinky2.pressed && this.rpinky3.pressed
     }
 }
 
 class Key {
-    constructor(public index, private _pitch: () => number, public pressed=false) {}
+    constructor(index, pitch, pressed=false) {
+        this.index = index
+        this._pitch = pitch
+        this.pressed = pressed
+
+    }
     
-    get pitch(): number {
+    get pitch() {
         return this._pitch()
     }
     
-    get redundant(): boolean {
+    get redundant() {
         return this.pitch === 0 && this.pressed
     }
     
@@ -119,9 +125,9 @@ class Key {
 }
 
 
-function midiToPitch() {
-    
-}
+// function midiToPitch() {
+     
+// }
 
 
 export function allCombinations(ewi) {
@@ -154,6 +160,8 @@ export function allCombinations(ewi) {
     console.timeEnd('group by pitch')
     
     for (let pitch in fingeringsByPitch) {
+        if (!fingeringsByPitch.hasOwnProperty(pitch))
+            continue
         fingeringsByPitch[pitch] = _.sortBy(fingeringsByPitch[pitch], fingering => fingering.pressedKeys.length)
         
         console.log(fingeringsByPitch[pitch][0].note)

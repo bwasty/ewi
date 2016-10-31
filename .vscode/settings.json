@@ -2,7 +2,6 @@
 {
     // Configure glob patterns for excluding files and folders.
 	"files.exclude": {
-        "**/*.js.map": true,
-        "app/**/*.js": true
+        "**/*.js.map": true
 	}
 }

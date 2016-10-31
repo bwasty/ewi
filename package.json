@@ -1,35 +1,29 @@
 {
-  "name": "EWI",
+  "name": "ewi",
   "version": "0.1.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bwasty/ewi.git"
+  "private": true,
+  "license": "MIT",
+  "homepage": "http://bwasty.github.io/ewi",
+  "devDependencies": {
+    "gh-pages": "^0.11.0",
+    "react-scripts": "0.7.0"
+  },
+  "dependencies": {
+    "lodash": "^4.16.5",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
   },
   "scripts": {
-    "start": "concurrent \"npm run tsc:w\" \"npm run lite\" ",    
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "lite": "lite-server",
-    "typings": "typings",
-    "postinstall": "typings install" 
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
-  "license": "MIT",
-  "dependencies": {
-    "angular2": "2.0.0-beta.7",
-    "bootstrap": "^3.3.6",
-    "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.3",
-    "lodash": "^4.2.1",
-    "ng2-bootstrap": "^0.53.0",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
-    "systemjs": "0.19.22",
-    "zone.js": "0.5.15"
-  },
-  "devDependencies": {
-    "concurrently": "^2.0.0",
-    "lite-server": "^2.1.0",
-    "typescript": "^1.7.5",
-    "typings": "^0.6.8"
+  "eslintConfig": {
+    "extends": "react-app",
+    "rules": {
+      "guard-for-in": "warn"
+    }
   }
 }
