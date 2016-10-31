@@ -89,7 +89,7 @@ export class Ewi {
     
     get hasNeutralizingKeys() {
         let pressed = this.pressedKeys
-        let hasKeyWithPitch = x => pressed.some(k => k.pitch == x)
+        let hasKeyWithPitch = x => pressed.some(k => k.pitch === x)
         return hasKeyWithPitch(1) && hasKeyWithPitch(-1)
     }
     
@@ -125,9 +125,9 @@ class Key {
 }
 
 
-function midiToPitch() {
-    
-}
+// function midiToPitch() {
+     
+// }
 
 
 export function allCombinations(ewi) {
@@ -160,6 +160,8 @@ export function allCombinations(ewi) {
     console.timeEnd('group by pitch')
     
     for (let pitch in fingeringsByPitch) {
+        if (!fingeringsByPitch.hasOwnProperty(pitch))
+            continue
         fingeringsByPitch[pitch] = _.sortBy(fingeringsByPitch[pitch], fingering => fingering.pressedKeys.length)
         
         console.log(fingeringsByPitch[pitch][0].note)
