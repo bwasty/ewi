@@ -4,7 +4,7 @@ import './App.css';
 import {Ewi, allCombinations} from './ewi'
 import FingeringChart from './FingeringChart'
 
-const DEFAULT_BITMASK = '0011111110111'
+const DEFAULT_BITMASK = '1011000111001'
 
 class App extends Component {
   constructor() {
@@ -47,7 +47,7 @@ class App extends Component {
         { this.fingeringsByPitch[ewi.pitch].slice(0, 10).map(ewi => <div key={ewi.id}>{ewi.id}</div>) }
         <p />
         <div style={{height: '300px'}}>
-          <FingeringChart />
+          <FingeringChart fingering={ewi}/>
         </div>
       </div>
     )
