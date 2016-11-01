@@ -21,6 +21,7 @@ class Keys extends Component {
       <g>
         <path
           id="lh1" name="Left first finger"
+          className="closed"
           d="M 95.856234,49 C 107.43729,49 116.85623,39.58106 116.85623,28 C 116.85623,16.41894 107.43729,7 95.856234,7 C 84.275174,7 74.856234,16.41894 74.856234,28 C 74.856234,39.58106 84.275174,49 95.856234,49 z" />
         <path
           id="bis" name="Bis key"
