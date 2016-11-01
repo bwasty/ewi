@@ -13,8 +13,8 @@ export class Ewi {
     lpinky1 = new Key( 8, () =>                                         1     )
     lpinky2 = new Key( 7, () =>                                        -1     )
     
-    rside   = new Key( 6, () => !this.lpinky1.pressed                ? -1 :  0)
-    rh1     = new Key( 5, () => !this.lh3.pressed                    ? -2 : -1)
+    rside   = new Key( 6, () => !this.lpinky1.pressed                ? +1 :  0)
+    rh1     = new Key( 5, () => !this.lh3.pressed                    ? -1 : -2)
     rh2     = new Key( 4, () =>                                        -1     )
     rh3     = new Key( 3, () =>                                        -2     )
     
@@ -122,6 +122,10 @@ class Key {
     unpress() {
         this.pressed = false
     }
+
+    toggle() {
+      this.pressed = !this.pressed
+    }
 }
 
 
@@ -131,41 +135,41 @@ class Key {
 
 
 export function allCombinations(ewi) {
-    console.time('compute all combinations')
+    // console.time('compute all combinations')
     
     let numCombinations = 2 ** ewi.keys.length;
     let fingerings = _.times(numCombinations, bitmask => new Ewi(bitmask))
     
-    console.timeEnd('compute all combinations')
-    console.log('combinations: ', fingerings.length)
+    // console.timeEnd('compute all combinations')
+    // console.log('combinations: ', fingerings.length)
    
-    console.time('filter out redundant')
+    // console.time('filter out redundant')
     fingerings = fingerings.filter(ewi => !ewi.redundant)
-    console.timeEnd('filter out redundant')
-    console.log('combinations: ', fingerings.length)
+    // console.timeEnd('filter out redundant')
+    // console.log('combinations: ', fingerings.length)
     
-    console.time('filter out allRightPinkyKeysPressed')
+    // console.time('filter out allRightPinkyKeysPressed')
     fingerings = fingerings.filter(ewi => !ewi.allRightPinkyKeysPressed)
-    console.timeEnd('filter out allRightPinkyKeysPressed')
-    console.log('combinations: ', fingerings.length)
+    // console.timeEnd('filter out allRightPinkyKeysPressed')
+    // console.log('combinations: ', fingerings.length)
     
-    console.time('filter out neutralizing keys')
+    // console.time('filter out neutralizing keys')
     fingerings = fingerings.filter(ewi => !ewi.hasNeutralizingKeys)
-    console.timeEnd('filter out neutralizing keys')
-    console.log('combinations: ', fingerings.length)
+    // console.timeEnd('filter out neutralizing keys')
+    // console.log('combinations: ', fingerings.length)
     
-    console.time('group by pitch')
+    // console.time('group by pitch')
     let fingeringsByPitch = _.groupBy(fingerings, ewi => ewi.pitch)
-    console.log(fingeringsByPitch)
-    console.timeEnd('group by pitch')
+    // console.log(fingeringsByPitch)
+    // console.timeEnd('group by pitch')
     
     for (let pitch in fingeringsByPitch) {
         if (!fingeringsByPitch.hasOwnProperty(pitch))
             continue
         fingeringsByPitch[pitch] = _.sortBy(fingeringsByPitch[pitch], fingering => fingering.pressedKeys.length)
         
-        console.log(fingeringsByPitch[pitch][0].note)
-        console.log(fingeringsByPitch[pitch].slice(0,5).map(ewi => `${ewi.id}, ${ewi.pressedKeys.length}]`))
+        // console.log(fingeringsByPitch[pitch][0].note)
+        // console.log(fingeringsByPitch[pitch].slice(0,5).map(ewi => `${ewi.id}, ${ewi.pressedKeys.length}]`))
     }
     
    // TODO!: further/different sort criteria...
