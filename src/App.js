@@ -4,7 +4,7 @@ import './App.css';
 import {Ewi, allCombinations} from './ewi'
 import FingeringChart from './FingeringChart'
 
-const DEFAULT_BITMASK = '1011000111001'
+const DEFAULT_BITMASK = '0010000000000'
 
 class App extends Component {
   constructor() {
@@ -28,18 +28,23 @@ class App extends Component {
     return (
       <div className="App">
         <h3>EWI Fingering Tool</h3>
-        <input type="text" defaultValue={DEFAULT_BITMASK} onChange={(e) => this.changeBitmask(e.target.value)}/>
         <div style={{height: '300px'}}>
           <FingeringChart fingering={ewi} handleKeyClick={this.handleKeyClick} />
         </div>
         <p />
         Note: {ewi.note}
-        <br />
-        Bitmask: {ewi.id}
         <p />
         Alternate fingerings: { this.fingeringsByPitch[ewi.pitch].length - 1 } <br />
         Top 10: <br />
-        { this.fingeringsByPitch[ewi.pitch].slice(0, 10).map(ewi => <div key={ewi.id}>{ewi.id}</div>) }
+        { 
+          this.fingeringsByPitch[ewi.pitch].slice(0, 10).map(ewi => {
+            return ( 
+              <div key={ewi.id} className="alternate-fingering">
+                <FingeringChart fingering={ewi} />
+              </div> 
+            )
+          })
+        }
         <p />
 
       </div>

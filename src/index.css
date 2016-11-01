@@ -13,3 +13,15 @@ path {
 .closed {
   fill: black
 }
+.closed:hover {
+  fill: black
+}
+
+path:hover {
+  fill: lightgray
+}
+
+.alternate-fingering {
+  height: 200px;
+  display: inline-block;
+}
