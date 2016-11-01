@@ -27,8 +27,8 @@ class App extends Component {
     let ewi = this.state.ewi
     return (
       <div className="App">
-        <h3 style={{ 'display': 'inline-block', 'margin-right': '6px'}}>EWI Fingering Tool</h3>
-        <a href="https://github.com/bwasty/ewi" style={{ 'font-size': 'small'}}>GitHub</a>
+        <h3>EWI Fingering Tool</h3>
+        <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
         <br />
         <div style={{height: '300px'}}>
           <FingeringChart fingering={ewi} handleKeyClick={this.handleKeyClick} />
@@ -37,9 +37,9 @@ class App extends Component {
         Note: {ewi.note}
         <p />
         Alternate fingerings: { this.fingeringsByPitch[ewi.pitch].length - 1 } <br />
-        Top 10: <br />
+        Top ones: <br />
         { 
-          this.fingeringsByPitch[ewi.pitch].slice(0, 10).map(ewi => {
+          this.fingeringsByPitch[ewi.pitch].slice(0, 20).map(ewi => {
             return ( 
               <div key={ewi.id} className="alternate-fingering">
                 <FingeringChart fingering={ewi} />

@@ -1,3 +1,4 @@
-.App {
-  /*text-align: center;*/
+.App h3 {
+  display: inline-block;
+  margin-right: 6px;
 }
