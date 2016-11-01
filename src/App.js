@@ -27,7 +27,9 @@ class App extends Component {
     let ewi = this.state.ewi
     return (
       <div className="App">
-        <h3>EWI Fingering Tool</h3>
+        <h3 style={{ 'display': 'inline-block', 'margin-right': '6px'}}>EWI Fingering Tool</h3>
+        <a href="https://github.com/bwasty/ewi" style={{ 'font-size': 'small'}}>GitHub</a>
+        <br />
         <div style={{height: '300px'}}>
           <FingeringChart fingering={ewi} handleKeyClick={this.handleKeyClick} />
         </div>
