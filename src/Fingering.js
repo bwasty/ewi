@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 const NUM_KEYS = 13
 
-export class Ewi {
+export class Fingering {
     basePitch = 13 // C# 
     
     lh1     = new Key(12, () =>                                        -2     )
@@ -138,7 +138,7 @@ export function allCombinations(ewi) {
     // console.time('compute all combinations')
     
     let numCombinations = 2 ** ewi.keys.length;
-    let fingerings = _.times(numCombinations, bitmask => new Ewi(bitmask))
+    let fingerings = _.times(numCombinations, bitmask => new Fingering(bitmask))
     
     // console.timeEnd('compute all combinations')
     // console.log('combinations: ', fingerings.length)

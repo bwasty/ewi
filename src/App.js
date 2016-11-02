@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import {Ewi, allCombinations} from './ewi'
+import {Fingering, allCombinations} from './Fingering'
 import FingeringChart from './FingeringChart'
 
 const DEFAULT_BITMASK = '0010000000000'
@@ -10,36 +10,36 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      ewi: new Ewi(parseInt(DEFAULT_BITMASK, 2))
+      fingering: new Fingering(parseInt(DEFAULT_BITMASK, 2))
     }
-    this.fingeringsByPitch = allCombinations(this.state.ewi)
+    this.fingeringsByPitch = allCombinations(this.state.fingering)
   }
   changeBitmask(bitmask) {
-    this.setState({ ewi: new Ewi(parseInt(bitmask, 2)) })
+    this.setState({ fingering: new Fingering(parseInt(bitmask, 2)) })
   }
   handleKeyClick = (key) => {
     this.setState((prev, props) => {
-      prev.ewi[key].toggle()
-      return {ewi: prev.ewi}
+      prev.fingering[key].toggle()
+      return {fingering: prev.fingering}
     })
   }
   render() {
-    let ewi = this.state.ewi
+    let fingering = this.state.fingering
     return (
       <div className="App">
         <h3>EWI Fingering Tool</h3>
         <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
         <br />
         <div style={{height: '280px'}}>
-          <FingeringChart fingering={ewi} handleKeyClick={this.handleKeyClick} />
+          <FingeringChart fingering={fingering} handleKeyClick={this.handleKeyClick} />
         </div>
         <p />
-        Note: {ewi.note}
+        Note: {fingering.note}
         <p />
-        Alternate fingerings: { this.fingeringsByPitch[ewi.pitch].length - 1 } <br />
+        Alternate fingerings: { this.fingeringsByPitch[fingering.pitch].length - 1 } <br />
         Top ones: <br />
         { 
-          this.fingeringsByPitch[ewi.pitch].slice(0, 15).map(ewi => {
+          this.fingeringsByPitch[fingering.pitch].slice(0, 15).map(ewi => {
             return ( 
               <div key={ewi.id} className="alternate-fingering">
                 <FingeringChart fingering={ewi} readonly={true} />
