@@ -22,6 +22,15 @@ export default class App extends Component {
       return {fingering: prev.fingering}
     })
   }
+  handleNoteChange = (note) => {
+    // TODO!
+    console.log(note)
+  }
+  handlePitchChange = (pitch) => {
+    // pitch: relative, in semitones
+    // TODO!
+    console.log(pitch)
+  }
   render() {
     let fingering = this.state.fingering
     return (
@@ -29,7 +38,7 @@ export default class App extends Component {
         <h3>EWI Fingering Tool</h3>
         <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
         <br />
-        <ButtonBar />
+        <ButtonBar handleNoteChange={this.handleNoteChange} handlePitchChange={this.handlePitchChange} />
         <FingeringChart 
           height="280px"
           fingering={fingering} 
