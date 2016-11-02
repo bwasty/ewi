@@ -5,10 +5,14 @@ export default class FingeringChart extends Component {
     return (
       <svg
         height="100%"
-        viewBox="0 0 160 595">
+        viewBox="0 0 160 595"
+        className={ this.props.readonly && 'readonly' }>
         <g id="allkeys">
+          <Keys 
+            fingering={this.props.fingering} 
+            handleKeyClick={this.props.handleKeyClick} 
+          />
           <OctaveRollers visible={false}/>
-          <Keys fingering={this.props.fingering} handleKeyClick={this.props.handleKeyClick} />
         </g>
       </svg>
     )
