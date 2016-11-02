@@ -1,4 +1,13 @@
 .App h3 {
   display: inline-block;
   margin-right: 6px;
+  margin-top: 10px;
+}
+
+.note-buttons {
+  display: inline-block;
+}
+
+.note-buttons Button {
+  display: block;
 }

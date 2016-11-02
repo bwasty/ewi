@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Button, Glyphicon, Tooltip, OverlayTrigger} from 'react-bootstrap'
+
 import './App.css';
 
 import {Fingering, allCombinations} from './Fingering'
@@ -27,7 +29,27 @@ class App extends Component {
         <h3>EWI Fingering Tool</h3>
         <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
         <br />
-        <div style={{height: '280px'}}>
+        <div className="note-buttons">
+          <Button bsSize="xsmall">#</Button>
+          <Button bsSize="xsmall">b</Button>
+          <p />
+          <Button bsSize="xsmall">C</Button>
+          <Button bsSize="xsmall">B</Button>
+          <Button bsSize="xsmall">A</Button>
+          <Button bsSize="xsmall">G</Button>
+          <Button bsSize="xsmall">F</Button>
+          <Button bsSize="xsmall">E</Button>
+          <Button bsSize="xsmall">D</Button>
+          <Button bsSize="xsmall">C</Button>
+          <p />
+          <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave up</Tooltip> }>
+            <Button bsSize="xsmall"><Glyphicon glyph="triangle-top" /></Button>
+          </OverlayTrigger>
+          <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave down</Tooltip> }>
+            <Button bsSize="xsmall"><Glyphicon glyph="triangle-bottom" /></Button>
+          </OverlayTrigger>
+        </div>
+        <div style={{height: '280px', display: 'inline-block'}}>
           <FingeringChart fingering={fingering} handleKeyClick={this.handleKeyClick} />
         </div>
         <p />
