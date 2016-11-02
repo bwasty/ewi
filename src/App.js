@@ -30,7 +30,7 @@ class App extends Component {
         <h3>EWI Fingering Tool</h3>
         <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
         <br />
-        <div style={{height: '300px'}}>
+        <div style={{height: '280px'}}>
           <FingeringChart fingering={ewi} handleKeyClick={this.handleKeyClick} />
         </div>
         <p />
@@ -39,12 +39,12 @@ class App extends Component {
         Alternate fingerings: { this.fingeringsByPitch[ewi.pitch].length - 1 } <br />
         Top ones: <br />
         { 
-          this.fingeringsByPitch[ewi.pitch].slice(0, 20).map(ewi => {
+          this.fingeringsByPitch[ewi.pitch].slice(0, 15).map(ewi => {
             return ( 
               <div key={ewi.id} className="alternate-fingering">
-                <FingeringChart fingering={ewi} />
-              </div> 
-            )
+                <FingeringChart fingering={ewi} readonly={true} />
+              </div>
+            ) 
           })
         }
         <p />
