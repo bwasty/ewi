@@ -3,7 +3,7 @@ import { Button, Glyphicon, Tooltip, OverlayTrigger} from 'react-bootstrap'
 
 import './App.css';
 
-import {Fingering, allCombinations} from './Fingering'
+import {Fingering, allCombinations, SHARP, FLAT} from './Fingering'
 import FingeringChart from './FingeringChart'
 
 const DEFAULT_BITMASK = 0b0010000000000
@@ -30,8 +30,8 @@ class App extends Component {
         <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
         <br />
         <div className="note-buttons">
-          <Button bsSize="xsmall">#</Button>
-          <Button bsSize="xsmall">b</Button>
+          <Button bsSize="xsmall">{SHARP}</Button>
+          <Button bsSize="xsmall">{FLAT}</Button>
           <p />
           <Button bsSize="xsmall">C</Button>
           <Button bsSize="xsmall">B</Button>

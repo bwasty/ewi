@@ -1,5 +1,8 @@
 import _ from 'lodash'
 
+export const SHARP = '\u266F' // MUSIC SHARP SIGN
+export const FLAT = '\u266D'; // MUSIC FLAT SIGN
+
 export class Fingering {
     basePitch = 13 // C# 
     
@@ -61,16 +64,16 @@ export class Fingering {
             pitch += 12
         switch (pitch) {
             case 0: return 'C'
-            case 1: return 'C# / Db'
+            case 1: return 'C' + SHARP
             case 2: return 'D'
-            case 3: return 'D# / Eb'
+            case 3: return 'D' + SHARP
             case 4: return 'E'
             case 5: return 'F'
-            case 6: return 'F# / Gb'
+            case 6: return 'F' + SHARP
             case 7: return 'G'
-            case 8: return 'G# / Ab'
+            case 8: return 'G' + SHARP
             case 9: return 'A'
-            case 10: return 'A# / Bb'
+            case 10: return 'A' + SHARP
             case 11: return 'B'
             default: return pitch.toString()
         }
