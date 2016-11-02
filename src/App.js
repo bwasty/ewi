@@ -8,7 +8,7 @@ import FingeringChart from './FingeringChart'
 
 const DEFAULT_BITMASK = 0b0010000000000
 
-class App extends Component {
+export default class App extends Component {
   constructor() {
     super()
     this.state = {
@@ -29,31 +29,15 @@ class App extends Component {
         <h3>EWI Fingering Tool</h3>
         <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
         <br />
-        <div className="note-buttons">
-          <Button bsSize="xsmall">{SHARP}</Button>
-          <Button bsSize="xsmall">{FLAT}</Button>
-          <p />
-          <Button bsSize="xsmall">C</Button>
-          <Button bsSize="xsmall">B</Button>
-          <Button bsSize="xsmall">A</Button>
-          <Button bsSize="xsmall">G</Button>
-          <Button bsSize="xsmall">F</Button>
-          <Button bsSize="xsmall">E</Button>
-          <Button bsSize="xsmall">D</Button>
-          <Button bsSize="xsmall">C</Button>
-          <p />
-          <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave up</Tooltip> }>
-            <Button bsSize="xsmall"><Glyphicon glyph="triangle-top" /></Button>
-          </OverlayTrigger>
-          <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave down</Tooltip> }>
-            <Button bsSize="xsmall"><Glyphicon glyph="triangle-bottom" /></Button>
-          </OverlayTrigger>
-        </div>
+        <ButtonBar />
         <div style={{height: '280px', display: 'inline-block'}}>
-          <FingeringChart fingering={fingering} handleKeyClick={this.handleKeyClick} />
+          <FingeringChart 
+            height="280px"
+            fingering={fingering} 
+            handleKeyClick={this.handleKeyClick} 
+            showNote={true}
+          />
         </div>
-        <p />
-        Note: {fingering.note}
         <p />
         Alternate fingerings: { this.fingeringsByPitch[fingering.pitch].length - 1 } <br />
         Top ones: <br />
@@ -61,7 +45,12 @@ class App extends Component {
           this.fingeringsByPitch[fingering.pitch].slice(0, 15).map(ewi => {
             return ( 
               <div key={ewi.id} className="alternate-fingering">
-                <FingeringChart fingering={ewi} readonly={true} />
+                <FingeringChart 
+                  height="180px"
+                  fingering={ewi} 
+                  readonly={true} 
+                  showNote={false}
+                />
               </div>
             ) 
           })
@@ -73,4 +62,27 @@ class App extends Component {
   }
 }
 
-export default App
+function ButtonBar(props) {
+  return (
+    <div className="note-buttons">
+      <Button bsSize="xsmall">{SHARP}</Button>
+      <Button bsSize="xsmall">{FLAT}</Button>
+      <p />
+      <Button bsSize="xsmall">C</Button>
+      <Button bsSize="xsmall">B</Button>
+      <Button bsSize="xsmall">A</Button>
+      <Button bsSize="xsmall">G</Button>
+      <Button bsSize="xsmall">F</Button>
+      <Button bsSize="xsmall">E</Button>
+      <Button bsSize="xsmall">D</Button>
+      <Button bsSize="xsmall">C</Button>
+      <p />
+      <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave up</Tooltip> }>
+        <Button bsSize="xsmall"><Glyphicon glyph="triangle-top" /></Button>
+      </OverlayTrigger>
+      <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave down</Tooltip> }>
+        <Button bsSize="xsmall"><Glyphicon glyph="triangle-bottom" /></Button>
+      </OverlayTrigger>
+    </div>
+  )
+}

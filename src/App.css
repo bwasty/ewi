@@ -8,6 +8,7 @@
   display: inline-block;
 }
 
-.note-buttons Button {
+.note-buttons button {
   display: block;
+  width: 24px;
 }

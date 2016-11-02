@@ -24,6 +24,5 @@ svg:not(.readonly) path:hover:not(.closed) {
 }
 
 .alternate-fingering {
-  height: 180px;
   display: inline-block;
 }

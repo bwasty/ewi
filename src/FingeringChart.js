@@ -3,18 +3,23 @@ import React, { Component } from 'react';
 export default class FingeringChart extends Component {
   render() {
     return (
-      <svg
-        height="100%"
-        viewBox="0 0 160 595"
-        className={ this.props.readonly && 'readonly' }>
-        <g id="allkeys">
-          <Keys 
-            fingering={this.props.fingering} 
-            handleKeyClick={this.props.handleKeyClick} 
-          />
-          <OctaveRollers visible={false}/>
-        </g>
-      </svg>
+      <div style={{height: this.props.height}}>
+        <svg
+          height="100%"
+          viewBox="0 0 160 595"
+          className={ this.props.readonly && 'readonly' }>
+          <g id="allkeys">
+            <Keys 
+              fingering={this.props.fingering} 
+              handleKeyClick={this.props.handleKeyClick} 
+            />
+            <OctaveRollers visible={false}/>
+          </g>
+        </svg>
+        { this.props.showNote && 
+          <div style={{ textAlign: 'center'}}>{this.props.fingering.note}</div> 
+        }
+      </div>
     )
   }
 }
