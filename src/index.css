@@ -22,7 +22,3 @@ svg path.closed {
 svg:not(.readonly) path:hover:not(.closed) {
   fill: lightgray
 }
-
-.alternate-fingering {
-  display: inline-block;
-}
