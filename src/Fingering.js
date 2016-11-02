@@ -1,7 +1,5 @@
 import _ from 'lodash'
 
-const NUM_KEYS = 13
-
 export class Fingering {
     basePitch = 13 // C# 
     
@@ -21,29 +19,32 @@ export class Fingering {
     rpinky1 = new Key( 2, () =>                                         1     )
     rpinky2 = new Key( 1, () =>                                        -1     )
     rpinky3 = new Key( 0, () =>                                        -2     )
+
+    roller = 0 // default (middle) octave. Range: -3 to 3
     
     keys = [
         this.lh1, this.bis, this.lh2, this.lh3, this.lpinky1, this.lpinky2,
         this.rside, this.rh1, this.rh2, this.rh3, this.rpinky1, this.rpinky2, this.rpinky3
     ]
     
-    constructor(bitmask) {
-        if (this.keys.length !== NUM_KEYS)
-            console.error('Assert failed.')
+    constructor(bitmask=0, roller=0) {
+        this.bitmask = bitmask
+        this.roller = roller
         
         if (!bitmask)
             return
-        
+
         this.keys
             .filter(k => (bitmask & (2 ** k.index)) !== 0)
             .forEach(k => k.press())
-        
     }
     
     get id() {
-        let bitmask = this.pressedKeys.reduce((bitmask, key) => bitmask + (2 ** key.index), 0).toString(2)
-        _.times(NUM_KEYS - bitmask.length, () => bitmask = '0' + bitmask)
-        return bitmask
+        return this.bitmask
+    }
+
+    get bitmaskString() {
+      return this.bitmask.toString(2)
     }
     
     get pitch() {
@@ -181,6 +182,27 @@ export function allCombinations(ewi) {
    return fingeringsByPitch
 }
 
-export function defaultFingerings() {
-    // TODO
+export function defaultFingeringsEwi() {
+    // Standard fingerings as found in the EWI 5000 User Guide page 39
+    // TODO: verify correctness
+    return [
+      0b1011010111011, // A#
+      0b1011010111001, // B
+      0b1011000111001, // C
+      0b1011100111001, // C#
+      0b1011000111000, // D
+      0b1011000111100, // D#
+      0b1011000110000, // E
+      0b1011000100000, // F
+      0b1011000010000, // F#
+      0b1011000000000, // G
+      0b1011100000000, // G#
+      0b1010000000000, // A
+      0b1010001000000, // A#
+      0b1100000000000, // A# (alt.)
+      0b1000000000000, // B
+      0b0010000000000, // C
+      0b0000000000000, // C#
+      0b0000100000000, // D
+    ]
 }

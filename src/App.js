@@ -4,18 +4,15 @@ import './App.css';
 import {Fingering, allCombinations} from './Fingering'
 import FingeringChart from './FingeringChart'
 
-const DEFAULT_BITMASK = '0010000000000'
+const DEFAULT_BITMASK = 0b0010000000000
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      fingering: new Fingering(parseInt(DEFAULT_BITMASK, 2))
+      fingering: new Fingering(DEFAULT_BITMASK)
     }
     this.fingeringsByPitch = allCombinations(this.state.fingering)
-  }
-  changeBitmask(bitmask) {
-    this.setState({ fingering: new Fingering(parseInt(bitmask, 2)) })
   }
   handleKeyClick = (key) => {
     this.setState((prev, props) => {
