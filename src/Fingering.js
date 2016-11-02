@@ -80,7 +80,8 @@ export class Fingering {
     }
     
     distance(other) {
-        // TODO: key-wise difference
+        let xor = this.bitmask ^ other.bitmask
+        return _.sum(xor.toString(2).split('').map(Number))
     }
     
     get pressedKeys() {
