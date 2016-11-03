@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { bitCount } from './Util'
 
 export const SHARP = '\u266F' // MUSIC SHARP SIGN
 export const FLAT = '\u266D'; // MUSIC FLAT SIGN
@@ -80,8 +81,7 @@ export class Fingering {
     }
     
     distance(other) {
-        let xor = this.bitmask ^ other.bitmask
-        return _.sum(xor.toString(2).split('').map(Number))
+        return bitCount(this.bitmask ^ other.bitmask)
     }
     
     get pressedKeys() {
