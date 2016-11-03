@@ -3,10 +3,10 @@ import { Button, Glyphicon, Tooltip, OverlayTrigger} from 'react-bootstrap'
 
 import './App.css';
 
-import {Fingering, allCombinations, SHARP, FLAT} from './Fingering'
+import {Fingering, allCombinations, SHARP, FLAT, STANDARD_FINGERINGS_BY_NOTE} from './Fingering'
 import FingeringChart from './FingeringChart'
 
-const DEFAULT_BITMASK = 0b0010000000000
+const DEFAULT_BITMASK = 0b0010000000000 // C
 
 export default class App extends Component {
   constructor() {
@@ -23,8 +23,9 @@ export default class App extends Component {
     })
   }
   handleNoteChange = (note) => {
-    // TODO!
-    console.log(note)
+    this.setState({
+      fingering: new Fingering(STANDARD_FINGERINGS_BY_NOTE[note])
+    })
   }
   handlePitchChange = (pitch) => {
     // pitch: relative, in semitones
@@ -58,14 +59,14 @@ function ButtonBar(props) {
       <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(1) }>{SHARP}</Button>
       <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(-1) }>{FLAT}</Button>
       <p />
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange("c'") }>C</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('b') }>B</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('a') }>A</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('g') }>G</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('f') }>F</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('e') }>E</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('d') }>D</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('c') }>C</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange("c'") }>c'</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('b') }>b</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('a') }>a</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('g') }>g</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('f') }>f</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('e') }>e</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('d') }>d</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('c') }>c</Button>
       <p />
       <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave up</Tooltip> }>
         <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(12) }><Glyphicon glyph="triangle-top" /></Button>

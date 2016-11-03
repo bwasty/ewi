@@ -186,27 +186,50 @@ export function allCombinations(ewi) {
    return fingeringsByPitch
 }
 
-export function defaultFingeringsEwi() {
-    // Standard fingerings as found in the EWI 5000 User Guide page 39
-    // TODO: verify correctness
-    return [
-      0b1011010111011, // A#
-      0b1011010111001, // B
-      0b1011000111001, // C
-      0b1011100111001, // C#
-      0b1011000111000, // D
-      0b1011000111100, // D#
-      0b1011000110000, // E
-      0b1011000100000, // F
-      0b1011000010000, // F#
-      0b1011000000000, // G
-      0b1011100000000, // G#
-      0b1010000000000, // A
-      0b1010001000000, // A#
-      0b1100000000000, // A# (alt.)
-      0b1000000000000, // B
-      0b0010000000000, // C
-      0b0000000000000, // C#
-      0b0000100000000, // D
-    ]
+// Standard fingerings as found in the EWI 5000 User Guide page 39
+// TODO: verify correctness
+const STANDARD_FINGERINGS_EWI = [
+    0b1011010111011, // A#
+    0b1011010111001, // B
+    0b1011000111001, // c
+    0b1011100111001, // c#
+    0b1011000111000, // d
+    0b1011000111100, // d#
+    0b1011000110000, // e
+    0b1011000100000, // f
+    0b1011000010000, // f#
+    0b1011000000000, // g
+    0b1011100000000, // g#
+    0b1010000000000, // a
+    0b1010001000000, // a#
+    0b1100000000000, // a# (alt.)
+    0b1000000000000, // b
+    0b0010000000000, // c'
+    0b0000000000000, // c#'
+    0b0000100000000, // d'
+]
+
+export const STANDARD_FINGERINGS_BY_NOTE = {
+  "A#" : STANDARD_FINGERINGS_EWI[0],
+  "B"  : STANDARD_FINGERINGS_EWI[1],
+  "c"  : STANDARD_FINGERINGS_EWI[2],
+  "c#" : STANDARD_FINGERINGS_EWI[3],
+  "d"  : STANDARD_FINGERINGS_EWI[4],
+  "d#" : STANDARD_FINGERINGS_EWI[5],
+  "e"  : STANDARD_FINGERINGS_EWI[6],
+  "f"  : STANDARD_FINGERINGS_EWI[7],
+  "f#" : STANDARD_FINGERINGS_EWI[8],
+  "g"  : STANDARD_FINGERINGS_EWI[9],
+  "g#" : STANDARD_FINGERINGS_EWI[10],
+  "a"  : STANDARD_FINGERINGS_EWI[11],
+  "a#" : STANDARD_FINGERINGS_EWI[12],
+  "a#_": STANDARD_FINGERINGS_EWI[13], // ?
+  "b"  : STANDARD_FINGERINGS_EWI[14],
+  "c'" : STANDARD_FINGERINGS_EWI[15],
+  "c#'": STANDARD_FINGERINGS_EWI[16],
+  "d'" : STANDARD_FINGERINGS_EWI[17],
+}
+
+export function isStandardFingering(fingering) {
+  return STANDARD_FINGERINGS_EWI.indexOf(fingering.bitmask) !== -1
 }
