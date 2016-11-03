@@ -210,6 +210,7 @@ const STANDARD_FINGERINGS_EWI = [
 ]
 
 export const STANDARD_FINGERINGS_BY_NOTE = {
+  // TODO!: flat variations...
   "A#" : STANDARD_FINGERINGS_EWI[0],
   "B"  : STANDARD_FINGERINGS_EWI[1],
   "c"  : STANDARD_FINGERINGS_EWI[2],
@@ -233,40 +234,3 @@ export const STANDARD_FINGERINGS_BY_NOTE = {
 export function isStandardFingering(fingering) {
   return STANDARD_FINGERINGS_EWI.indexOf(fingering.bitmask) !== -1
 }
-
-
-function adjustOctave(note, roller) {
-  // TODO!!: account for input OUTSIDE main octave
-  switch (roller) {
-    case 0:
-      break 
-
-    case -1:
-      note = note.toUpperCase()
-      break
-    case -2:
-      note = note.toUpperCase()
-      note += ","
-      break
-    case -3:
-      note = note.toUpperCase()
-      note += ",,"
-      break
-
-    case  1:
-      note += "'"
-      break
-    case  2:
-      note += "''"
-      break
-    case  3:
-      note += "'''"
-      break
-    default:
-      console.error('Invalid roller position')
-  }
-
-  return note
-}
-
-window.adjustOctave = adjustOctave

@@ -59,6 +59,7 @@ function ButtonBar(props) {
       <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(1) }>{SHARP}</Button>
       <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(-1) }>{FLAT}</Button>
       <p />
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange("d'") }>d'</Button>
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange("c'") }>c'</Button>
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('b') }>b</Button>
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('a') }>a</Button>
@@ -67,6 +68,7 @@ function ButtonBar(props) {
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('e') }>e</Button>
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('d') }>d</Button>
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('c') }>c</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('B') }>B</Button>
       <p />
       <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave up</Tooltip> }>
         <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(12) }><Glyphicon glyph="triangle-top" /></Button>
