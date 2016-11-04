@@ -9,6 +9,13 @@
 }
 
 .note-buttons button {
-  display: block;
   width: 24px;
+}
+
+.note-button {
+  display: flex
+}
+
+.note-button:not(:hover) button:not(:first-child) {
+  visibility: hidden;
 }

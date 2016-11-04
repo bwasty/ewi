@@ -208,6 +208,7 @@ const STANDARD_FINGERINGS_EWI = [
     0b0010000000000, // c'
     0b0000000000000, // c#'
     0b0000100000000, // d'
+    0b0000100000100, // d#' (not in manual, but there's only one possibility)
 ]
 
 export const STANDARD_FINGERINGS_BY_NOTE = {
@@ -230,6 +231,7 @@ export const STANDARD_FINGERINGS_BY_NOTE = {
   "c'" : STANDARD_FINGERINGS_EWI[15], "b#'": STANDARD_FINGERINGS_EWI[15],
   "c#'": STANDARD_FINGERINGS_EWI[16], "db'": STANDARD_FINGERINGS_EWI[16],
   "d'" : STANDARD_FINGERINGS_EWI[17],
+  "d#'" : STANDARD_FINGERINGS_EWI[18],
 }
 
 export function isStandardFingering(fingering) {

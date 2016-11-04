@@ -57,17 +57,16 @@ export default class App extends Component {
 function ButtonBar(props) {
   return (
     <div className="note-buttons">
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange("d'") }>d'</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange("c'") }>c'</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('b') }>b</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('a') }>a</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('g') }>g</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('f') }>f</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('e') }>e</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('d') }>d</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('c') }>c</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('B') }>B</Button>
-      <NoteButton note='c' handleNoteChange={props.handleNoteChange} />
+      <NoteButton note="d'" handleNoteChange={props.handleNoteChange} />
+      <NoteButton note="c'" handleNoteChange={props.handleNoteChange} noFlat />
+      <NoteButton note='b' handleNoteChange={props.handleNoteChange}  noSharp/>
+      <NoteButton note='a' handleNoteChange={props.handleNoteChange} />
+      <NoteButton note='g' handleNoteChange={props.handleNoteChange} />
+      <NoteButton note='f' handleNoteChange={props.handleNoteChange} noFlat />
+      <NoteButton note='e' handleNoteChange={props.handleNoteChange} noSharp />
+      <NoteButton note='d' handleNoteChange={props.handleNoteChange} />
+      <NoteButton note='c' handleNoteChange={props.handleNoteChange} noFlat />
+      <NoteButton note='B' handleNoteChange={props.handleNoteChange} noSharp />
       <p />
       <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave up</Tooltip> }>
         <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(12) }><Glyphicon glyph="triangle-top" /></Button>
@@ -81,10 +80,12 @@ function ButtonBar(props) {
 
 function NoteButton(props) {
   return (
-    <div style={{display: 'inline-block'}}>
+    <div className="note-button">
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(props.note) }>{props.note}</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(sharpen(props.note)) }>{SHARP}</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(flatten(props.note)) }>{FLAT}</Button>
+      { !props.noSharp && 
+        <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(sharpen(props.note)) }>{SHARP}</Button> }
+      { !props.noFlat && 
+        <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(flatten(props.note)) }>{FLAT}</Button> }
     </div>
   )
 }
