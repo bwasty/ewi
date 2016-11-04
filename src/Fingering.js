@@ -146,32 +146,32 @@ class Key {
 // }
 
 
-export function allCombinations(ewi) {
+export function allCombinations(fingering) {
     // console.time('compute all combinations')
     
-    let numCombinations = 2 ** ewi.keys.length;
+    let numCombinations = 2 ** fingering.keys.length;
     let fingerings = _.times(numCombinations, bitmask => new Fingering(bitmask))
     
     // console.timeEnd('compute all combinations')
     // console.log('combinations: ', fingerings.length)
    
     // console.time('filter out redundant')
-    fingerings = fingerings.filter(ewi => !ewi.redundant)
+    fingerings = fingerings.filter(fingering => !fingering.redundant)
     // console.timeEnd('filter out redundant')
     // console.log('combinations: ', fingerings.length)
     
     // console.time('filter out allRightPinkyKeysPressed')
-    fingerings = fingerings.filter(ewi => !ewi.allRightPinkyKeysPressed)
+    fingerings = fingerings.filter(fingering => !fingering.allRightPinkyKeysPressed)
     // console.timeEnd('filter out allRightPinkyKeysPressed')
     // console.log('combinations: ', fingerings.length)
     
     // console.time('filter out neutralizing keys')
-    fingerings = fingerings.filter(ewi => !ewi.hasNeutralizingKeys)
+    fingerings = fingerings.filter(fingering => !fingering.hasNeutralizingKeys)
     // console.timeEnd('filter out neutralizing keys')
     // console.log('combinations: ', fingerings.length)
     
     // console.time('group by pitch')
-    let fingeringsByPitch = _.groupBy(fingerings, ewi => ewi.pitch)
+    let fingeringsByPitch = _.groupBy(fingerings, fingering => fingering.pitch)
     // console.log(fingeringsByPitch)
     // console.timeEnd('group by pitch')
     
@@ -189,6 +189,7 @@ export function allCombinations(ewi) {
    // - number of 'gaps' between pressed keys?? (smaller = better)
    // - penalty for bis key?
    
+   // TODO!!: bis key without the surrounding ones ok?
    
    return fingeringsByPitch
 }
