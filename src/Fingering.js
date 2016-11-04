@@ -1,8 +1,5 @@
 import _ from 'lodash'
-import { bitCount } from './Util'
-
-export const SHARP = '\u266F' // MUSIC SHARP SIGN
-export const FLAT = '\u266D'; // MUSIC FLAT SIGN
+import { bitCount, SHARP} from './Util'
 
 export class Fingering {
     basePitch = 13 // C# 
@@ -59,24 +56,27 @@ export class Fingering {
     }
     
     get note() {
-        // TODO: take Octave into account
-        let pitch = this.pitch % 12
-        if (pitch < 0)
-            pitch += 12
-        switch (pitch) {
-            case 0: return 'C'
-            case 1: return 'C' + SHARP
-            case 2: return 'D'
-            case 3: return 'D' + SHARP
-            case 4: return 'E'
-            case 5: return 'F'
-            case 6: return 'F' + SHARP
-            case 7: return 'G'
-            case 8: return 'G' + SHARP
-            case 9: return 'A'
-            case 10: return 'A' + SHARP
-            case 11: return 'B'
-            default: return pitch.toString()
+        switch (this.pitch) {
+            case -2: return 'A#'
+            case -1: return 'B'
+            case  0: return 'c'
+            case  1: return 'c#'
+            case  2: return 'd'
+            case  3: return 'd#'
+            case  4: return 'e'
+            case  5: return 'f'
+            case  6: return 'f#'
+            case  7: return 'g'
+            case  8: return 'g#'
+            case  9: return 'a'
+            case 10: return 'a#'
+            case 11: return 'b'
+            case 12: return "c'"
+            case 13: return "c#'"
+            case 14: return "d'"
+            case 15: return "d#'"
+            default: 
+              console.error('Invalid pitch')
         }
     }
     
@@ -120,6 +120,7 @@ class Key {
         return this.pitch === 0 && this.pressed
     }
     
+    // TODO!!: what about bitmask of parent Fingering? (press, unpress, toggle)
     press() {
         this.pressed = true
     }
@@ -211,23 +212,23 @@ const STANDARD_FINGERINGS_EWI = [
 
 export const STANDARD_FINGERINGS_BY_NOTE = {
   // TODO!: flat variations...
-  "A#" : STANDARD_FINGERINGS_EWI[0],
-  "B"  : STANDARD_FINGERINGS_EWI[1],
-  "c"  : STANDARD_FINGERINGS_EWI[2],
-  "c#" : STANDARD_FINGERINGS_EWI[3],
-  "d"  : STANDARD_FINGERINGS_EWI[4],
-  "d#" : STANDARD_FINGERINGS_EWI[5],
-  "e"  : STANDARD_FINGERINGS_EWI[6],
-  "f"  : STANDARD_FINGERINGS_EWI[7],
-  "f#" : STANDARD_FINGERINGS_EWI[8],
-  "g"  : STANDARD_FINGERINGS_EWI[9],
-  "g#" : STANDARD_FINGERINGS_EWI[10],
-  "a"  : STANDARD_FINGERINGS_EWI[11],
-  "a#" : STANDARD_FINGERINGS_EWI[12],
-  "a#_": STANDARD_FINGERINGS_EWI[13], // TODO: ?
-  "b"  : STANDARD_FINGERINGS_EWI[14],
-  "c'" : STANDARD_FINGERINGS_EWI[15],
-  "c#'": STANDARD_FINGERINGS_EWI[16],
+  "A#" : STANDARD_FINGERINGS_EWI[ 0], "Bb" : STANDARD_FINGERINGS_EWI[0],
+  "B"  : STANDARD_FINGERINGS_EWI[ 1], "Cb" : STANDARD_FINGERINGS_EWI[1],
+  "c"  : STANDARD_FINGERINGS_EWI[ 2], "B#" : STANDARD_FINGERINGS_EWI[2],
+  "c#" : STANDARD_FINGERINGS_EWI[ 3], "db" : STANDARD_FINGERINGS_EWI[3],
+  "d"  : STANDARD_FINGERINGS_EWI[ 4], 
+  "d#" : STANDARD_FINGERINGS_EWI[ 5], "eb" : STANDARD_FINGERINGS_EWI[5],
+  "e"  : STANDARD_FINGERINGS_EWI[ 6], "fb" : STANDARD_FINGERINGS_EWI[6],
+  "f"  : STANDARD_FINGERINGS_EWI[ 7], "e#" : STANDARD_FINGERINGS_EWI[7],
+  "f#" : STANDARD_FINGERINGS_EWI[ 8], "gb" : STANDARD_FINGERINGS_EWI[8],
+  "g"  : STANDARD_FINGERINGS_EWI[ 9], 
+  "g#" : STANDARD_FINGERINGS_EWI[10], "ab" : STANDARD_FINGERINGS_EWI[10],
+  "a"  : STANDARD_FINGERINGS_EWI[11], 
+  "a#" : STANDARD_FINGERINGS_EWI[12], "bb" : STANDARD_FINGERINGS_EWI[12],
+  "a#_": STANDARD_FINGERINGS_EWI[13], "bb_": STANDARD_FINGERINGS_EWI[13], // TODO: ?
+  "b"  : STANDARD_FINGERINGS_EWI[14], "cb" : STANDARD_FINGERINGS_EWI[14],
+  "c'" : STANDARD_FINGERINGS_EWI[15], "b#'": STANDARD_FINGERINGS_EWI[15],
+  "c#'": STANDARD_FINGERINGS_EWI[16], "db'": STANDARD_FINGERINGS_EWI[16],
   "d'" : STANDARD_FINGERINGS_EWI[17],
 }
 

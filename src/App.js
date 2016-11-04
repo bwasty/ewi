@@ -3,8 +3,9 @@ import { Button, Glyphicon, Tooltip, OverlayTrigger} from 'react-bootstrap'
 
 import './App.css';
 
-import {Fingering, allCombinations, SHARP, FLAT, STANDARD_FINGERINGS_BY_NOTE} from './Fingering'
+import {Fingering, allCombinations, STANDARD_FINGERINGS_BY_NOTE} from './Fingering'
 import FingeringChart from './FingeringChart'
+import {SHARP, FLAT, sharpen, flatten} from './Util'
 
 const DEFAULT_BITMASK = 0b0010000000000 // C
 
@@ -56,9 +57,6 @@ export default class App extends Component {
 function ButtonBar(props) {
   return (
     <div className="note-buttons">
-      <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(1) }>{SHARP}</Button>
-      <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(-1) }>{FLAT}</Button>
-      <p />
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange("d'") }>d'</Button>
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange("c'") }>c'</Button>
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('b') }>b</Button>
@@ -69,6 +67,7 @@ function ButtonBar(props) {
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('d') }>d</Button>
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('c') }>c</Button>
       <Button bsSize="xsmall" onClick={ () => props.handleNoteChange('B') }>B</Button>
+      <NoteButton note='c' handleNoteChange={props.handleNoteChange} />
       <p />
       <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave up</Tooltip> }>
         <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(12) }><Glyphicon glyph="triangle-top" /></Button>
@@ -76,6 +75,16 @@ function ButtonBar(props) {
       <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave down</Tooltip> }>
         <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(-12) }><Glyphicon glyph="triangle-bottom" /></Button>
       </OverlayTrigger>
+    </div>
+  )
+}
+
+function NoteButton(props) {
+  return (
+    <div style={{display: 'inline-block'}}>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(props.note) }>{props.note}</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(sharpen(props.note)) }>{SHARP}</Button>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(flatten(props.note)) }>{FLAT}</Button>
     </div>
   )
 }

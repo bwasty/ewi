@@ -1,5 +1,8 @@
 import _ from 'lodash'
 
+export const SHARP = '\u266F' // MUSIC SHARP SIGN
+export const FLAT = '\u266D'; // MUSIC FLAT SIGN
+
 export function bitCount(i) {
   // Counts the number of set bits in i (Hamming Weight)
   // taken from http://stackoverflow.com/questions/109023/how-to-count-the-number-of-set-bits-in-a-32-bit-integer
@@ -36,4 +39,20 @@ export function adjustOctave(note, roller) {
   }
 
   return note
+}
+
+export function sharpen(note) {
+  // Adds sharp sign at the right position.
+  // Does NOT handle notes that already have accidentals!
+  let letter = note.slice(0, 1)
+  let rest = note.slice(1)
+  return letter + '#' + rest
+}
+
+export function flatten(note) {
+  // Adds flat sign at the right position.
+  // Does NOT handle notes that already have accidentals!
+  let letter = note.slice(0, 1)
+  let rest = note.slice(1)
+  return letter + 'b' + rest
 }
