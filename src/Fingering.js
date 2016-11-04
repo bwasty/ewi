@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { bitCount } from './Util'
+import { bitCount, showFlat } from './Util'
 
 export class Fingering {
     basePitch = 13 // C# 
@@ -28,9 +28,10 @@ export class Fingering {
         this.rside, this.rh1, this.rh2, this.rh3, this.rpinky1, this.rpinky2, this.rpinky3
     ]
     
-    constructor(bitmask=0, roller=0) {
+    constructor(bitmask=0, roller=0, flat=false) {
         this.bitmask = bitmask
         this.roller = roller
+        this.flat = flat
         
         if (!bitmask)
             return
@@ -56,28 +57,33 @@ export class Fingering {
     }
     
     get note() {
-        switch (this.pitch) {
-            case -2: return 'A#'
-            case -1: return 'B'
-            case  0: return 'c'
-            case  1: return 'c#'
-            case  2: return 'd'
-            case  3: return 'd#'
-            case  4: return 'e'
-            case  5: return 'f'
-            case  6: return 'f#'
-            case  7: return 'g'
-            case  8: return 'g#'
-            case  9: return 'a'
-            case 10: return 'a#'
-            case 11: return 'b'
-            case 12: return "c'"
-            case 13: return "c#'"
-            case 14: return "d'"
-            case 15: return "d#'"
-            default: 
-              console.error('Invalid pitch')
-        }
+      let note;
+      switch (this.pitch) {
+        case -2: note = 'A#' ; break;
+        case -1: note = 'B'  ; break;
+        case  0: note = 'c'  ; break;
+        case  1: note = 'c#' ; break;
+        case  2: note = 'd'  ; break;
+        case  3: note = 'd#' ; break;
+        case  4: note = 'e'  ; break;
+        case  5: note = 'f'  ; break;
+        case  6: note = 'f#' ; break;
+        case  7: note = 'g'  ; break;
+        case  8: note = 'g#' ; break;
+        case  9: note = 'a'  ; break;
+        case 10: note = 'a#' ; break;
+        case 11: note = 'b'  ; break;
+        case 12: note = "c'" ; break;
+        case 13: note = "c#'"; break;
+        case 14: note = "d'" ; break;
+        case 15: note = "d#'"; break;
+        default: 
+            console.error('Invalid pitch')
+      }
+      if (this.flat)
+        note = showFlat(note)
+  
+      return note
     }
     
     distance(other) {

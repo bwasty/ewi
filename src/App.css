@@ -5,7 +5,8 @@
 }
 
 .note-buttons {
-  display: inline-block;
+  float: left;
+  margin-top: 12px
 }
 
 .note-buttons button {

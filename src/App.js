@@ -24,8 +24,9 @@ export default class App extends Component {
     })
   }
   handleNoteChange = (note) => {
+    let flat = note.charAt(1) === 'b'
     this.setState({
-      fingering: new Fingering(STANDARD_FINGERINGS_BY_NOTE[note])
+      fingering: new Fingering(STANDARD_FINGERINGS_BY_NOTE[note], undefined, flat)
     })
   }
   handlePitchChange = (pitch) => {
@@ -62,12 +63,13 @@ function ButtonBar(props) {
       <NoteButton note='b' handleNoteChange={props.handleNoteChange}  noSharp/>
       <NoteButton note='a' handleNoteChange={props.handleNoteChange} />
       <NoteButton note='g' handleNoteChange={props.handleNoteChange} />
+      <div style={{height: '12px'}} />
       <NoteButton note='f' handleNoteChange={props.handleNoteChange} noFlat />
       <NoteButton note='e' handleNoteChange={props.handleNoteChange} noSharp />
       <NoteButton note='d' handleNoteChange={props.handleNoteChange} />
       <NoteButton note='c' handleNoteChange={props.handleNoteChange} noFlat />
       <NoteButton note='B' handleNoteChange={props.handleNoteChange} noSharp />
-      <p />
+      <div style={{height: '12px'}} />
       <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave up</Tooltip> }>
         <Button bsSize="xsmall" onClick={ () => props.handlePitchChange(12) }><Glyphicon glyph="triangle-top" /></Button>
       </OverlayTrigger>
