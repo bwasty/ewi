@@ -25,6 +25,7 @@ test('adjustOctave(note, roller)', () => {
 test('showFlat(note)', () => {
   expect(showFlat('d#')).toEqual('eb')
   expect(showFlat('A#')).toEqual('Bb')
+  expect(showFlat('g#')).toEqual('ab')
 })
 
 test('prettyAccidental(note)', () => {
