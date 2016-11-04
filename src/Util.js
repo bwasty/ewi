@@ -3,6 +3,8 @@ import _ from 'lodash'
 export const SHARP = '\u266F' // MUSIC SHARP SIGN
 export const FLAT = '\u266D'; // MUSIC FLAT SIGN
 
+/* eslint no-func-assign: 'off' */
+
 export function bitCount(i) {
   // Counts the number of set bits in i (Hamming Weight)
   // taken from http://stackoverflow.com/questions/109023/how-to-count-the-number-of-set-bits-in-a-32-bit-integer
@@ -10,6 +12,7 @@ export function bitCount(i) {
   i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
   return (((i + (i >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
 }
+bitCount = _.memoize(bitCount)
 
 export function adjustOctave(note, roller) {
   // Takes a note string in "Helmholtz pitch notation" adapts it to the given roller position
@@ -39,6 +42,7 @@ export function adjustOctave(note, roller) {
 
   return note
 }
+adjustOctave = _.memoize(adjustOctave)
 
 export function sharpen(note) {
   // Adds sharp sign at the right position.
@@ -47,6 +51,7 @@ export function sharpen(note) {
   let rest = note.slice(1)
   return letter + '#' + rest
 }
+sharpen = _.memoize(sharpen)
 
 export function flatten(note) {
   // Adds flat sign at the right position.
@@ -55,6 +60,7 @@ export function flatten(note) {
   let rest = note.slice(1)
   return letter + 'b' + rest
 }
+flatten = _.memoize(flatten)
 
 export function showFlat(note) {
   // Takes a 'sharp' note and converts it to the equivalent 'flat' one
@@ -63,5 +69,4 @@ export function showFlat(note) {
   let charCode = letter.charCodeAt(0)
   return String.fromCharCode(charCode + 1) + 'b' + note.slice(2)  
 }
-// eslint-disable-next-line no-func-assign
 showFlat = _.memoize(showFlat)
