@@ -1,4 +1,4 @@
-import { bitCount, adjustOctave } from './Util';
+import { bitCount, adjustOctave, showFlat } from './Util';
 
 test('bitCount(i)', () => {
   expect(bitCount(0b0)).toEqual(0)
@@ -20,4 +20,9 @@ test('adjustOctave(note, roller)', () => {
 
   expect(adjustOctave("B", 1)).toEqual("b")
   expect(adjustOctave("c'", -1)).toEqual("c")
+})
+
+test('showFlat(note)', () => {
+  expect(showFlat('d#')).toEqual('eb')
+  expect(showFlat('A#')).toEqual('Bb')
 })

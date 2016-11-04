@@ -11,7 +11,6 @@ export function bitCount(i) {
   return (((i + (i >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
 }
 
-
 export function adjustOctave(note, roller) {
   // Takes a note string in "Helmholtz pitch notation" adapts it to the given roller position
   // The input is expected to be based on the default roller position (0)
@@ -56,3 +55,13 @@ export function flatten(note) {
   let rest = note.slice(1)
   return letter + 'b' + rest
 }
+
+export function showFlat(note) {
+  // Takes a 'sharp' note and converts it to the equivalent 'flat' one
+  // Does NOT handle special cases - input needs to have '#' as second character and b# doesn't work
+  let letter = note.charAt(0)
+  let charCode = letter.charCodeAt(0)
+  return String.fromCharCode(charCode + 1) + 'b' + note.slice(2)  
+}
+// eslint-disable-next-line no-func-assign
+showFlat = _.memoize(showFlat)

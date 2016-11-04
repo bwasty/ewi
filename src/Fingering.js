@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { bitCount, SHARP} from './Util'
+import { bitCount } from './Util'
 
 export class Fingering {
     basePitch = 13 // C# 
