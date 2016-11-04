@@ -20,13 +20,17 @@ export default class App extends Component {
   handleKeyClick = (key) => {
     this.setState((prev, props) => {
       prev.fingering[key].toggle()
-      return {fingering: prev.fingering}
+      return {
+        fingering: prev.fingering,
+        showAll: false
+      }
     })
   }
   handleNoteChange = (note) => {
     let flat = note.charAt(1) === 'b'
     this.setState({
-      fingering: new Fingering(STANDARD_FINGERINGS_BY_NOTE[note], undefined, flat)
+      fingering: new Fingering(STANDARD_FINGERINGS_BY_NOTE[note], undefined, flat),
+      showAll: false
     })
   }
   handlePitchChange = (pitch) => {
@@ -49,7 +53,12 @@ export default class App extends Component {
           showNote={true}
         />
         <p />
-        <AlternativeFingerings fingering={fingering} fingeringsByPitch={this.fingeringsByPitch} />
+        <AlternativeFingerings 
+          fingering={fingering} 
+          fingeringsByPitch={this.fingeringsByPitch} 
+          showAll={this.state.showAll} />
+        { !this.state.showAll && 
+          <Button bsSize="small" onClick={ () => this.setState({showAll: true}) }>More...</Button>}
       </div>
     )
   }
@@ -93,22 +102,23 @@ function NoteButton(props) {
 }
 
 function AlternativeFingerings(props) {
+  let alternatives = props.fingeringsByPitch[props.fingering.pitch]
+  if (!props.showAll)
+    alternatives = alternatives.slice(0, 15)
+  alternatives = alternatives
+    .filter(fingering => fingering.id !== props.fingering.id)
+    .map(fingering => <FingeringChart 
+                        key={fingering.id}
+                        height="180px"
+                        fingering={fingering} 
+                        readonly={true} 
+                        showNote={false} />)
+
   return (
     <div>
       Alternate fingerings: { props.fingeringsByPitch[props.fingering.pitch].length - 1 } <br />
       Top ones: <br />
-      { 
-        props.fingeringsByPitch[props.fingering.pitch].slice(0, 15).map(ewi => {
-          return ( 
-              <FingeringChart 
-                key={ewi.id}
-                height="180px"
-                fingering={ewi} 
-                readonly={true} 
-                showNote={false} />
-          ) 
-        })
-      }
+      { alternatives }
     </div>
   )
 }

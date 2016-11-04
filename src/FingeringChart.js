@@ -4,7 +4,7 @@ import { prettyAccidental } from './Util'
 export default class FingeringChart extends Component {
   render() {
     return (
-      <div style={{height: this.props.height, display: 'inline-block'}}>
+      <div style={{height: this.props.height, marginBottom: !this.props.showNote &&  '16px', display: 'inline-block'}}>
         <svg
           height="100%"
           viewBox="0 0 160 595"
