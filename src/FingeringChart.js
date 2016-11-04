@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { prettyAccidental } from './Util'
 
 export default class FingeringChart extends Component {
   render() {
@@ -17,7 +18,7 @@ export default class FingeringChart extends Component {
           </g>
         </svg>
         { this.props.showNote && 
-          <div style={{ textAlign: 'center'}}>{this.props.fingering.note}</div> 
+          <div style={{ textAlign: 'center'}}>{ prettyAccidental(this.props.fingering.note) }</div> 
         }
       </div>
     )

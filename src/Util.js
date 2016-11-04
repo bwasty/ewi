@@ -70,3 +70,8 @@ export function showFlat(note) {
   return String.fromCharCode(charCode + 1) + 'b' + note.slice(2)  
 }
 showFlat = _.memoize(showFlat)
+
+export function prettyAccidental(note) {
+  return note.replace('#', SHARP).replace(/(?!^)b/, FLAT)
+}
+prettyAccidental = _.memoize(prettyAccidental)
