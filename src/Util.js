@@ -64,10 +64,14 @@ flatten = _.memoize(flatten)
 
 export function showFlat(note) {
   // Takes a 'sharp' note and converts it to the equivalent 'flat' one
-  // Does NOT handle special cases - input needs to have '#' as second character and b# doesn't work
+  // Does NOT handle special cases - input needs to have '#' as second character
   let letter = note.charAt(0)
-  let charCode = letter.charCodeAt(0)
-  return String.fromCharCode(charCode + 1) + 'b' + note.slice(2)  
+  let lowered = letter.toLowerCase()
+  let newLetter = (lowered === 'g') ?
+    (letter === lowered ? 'a' : 'A') :
+    String.fromCharCode(letter.charCodeAt(0) + 1)
+  
+  return  newLetter + 'b' + note.slice(2)  
 }
 showFlat = _.memoize(showFlat)
 
