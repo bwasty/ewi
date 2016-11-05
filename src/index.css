@@ -31,10 +31,10 @@ g#octave.hide-rollers path {
   stroke: transparent;
 }
 
-svg:not(.readonly) g#octave:hover path {
+svg:not(.readonly) g#octave.hide-rollers:hover path {
   stroke: darkgray;
 }
 
-svg:not(.readonly) g#octave:hover path.closed {
+svg:not(.readonly) g#octave.hide-rollers:hover path.closed {
   fill: black;
 }

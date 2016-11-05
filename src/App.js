@@ -25,6 +25,14 @@ export default class App extends Component {
       }
     })
   }
+  handleRollerClick = (roller) => {
+    this.setState((prev, props) => {
+      prev.fingering.roller = roller
+      return {
+        fingering: prev.fingering,
+      }
+    })
+  }
   handleNoteChange = (note, octave) => {
     let flat = note.charAt(1) === 'b'
     this.setState({
@@ -43,6 +51,7 @@ export default class App extends Component {
             height="280px"
             fingering={fingering} 
             handleKeyClick={this.handleKeyClick} 
+            handleRollerClick={this.handleRollerClick} 
             showNote={true}
           />
         </Panel>
