@@ -96,6 +96,8 @@ export class Fingering {
           this.keys[i].diff = 1
         else if (!this.keys[i].pressed && previousFingering.keys[i].pressed)
           this.keys[i].diff = -1
+        else 
+          this.keys[i].diff = 0
       }
     }
     
