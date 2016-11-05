@@ -41,3 +41,6 @@
 .plus-button a:hover {
   color: initial;
 }
+.plus-button a:focus {
+  color: initial;
+}

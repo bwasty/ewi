@@ -13,55 +13,88 @@ export default class App extends Component {
   constructor() {
     super()
     this.state = {
-      fingering: new Fingering(DEFAULT_BITMASK)
+      fingerings: [new Fingering(DEFAULT_BITMASK)],
+      lastHoveredFingering: 0,
+      selectedFingering: 0
     }
-    this.fingeringsByPitch = allCombinations(this.state.fingering)
+    this.fingeringsByPitch = allCombinations(this.state.fingerings[0])
   }
-  handleKeyClick = (key) => {
+  handleKeyClick = (key, index) => {
     this.setState((prev, props) => {
-      prev.fingering[key].toggle()
+      prev.fingerings[index][key].toggle()
       return {
-        fingering: prev.fingering,
+        fingerings: prev.fingerings,
       }
     })
   }
-  handleRollerClick = (roller) => {
+  handleRollerClick = (roller, index) => {
     this.setState((prev, props) => {
-      prev.fingering.roller = roller
+      prev.fingerings[index].roller = roller
       return {
-        fingering: prev.fingering,
+        fingerings: prev.fingerings,
       }
     })
   }
   handleNoteChange = (note, octave) => {
     let flat = note.charAt(1) === 'b'
+    let fingerings = this.state.fingerings.slice()
+    fingerings[this.state.selectedFingering] = new Fingering(
+      STANDARD_FINGERINGS_BY_NOTE[note], octave, flat)
     this.setState({
-      fingering: new Fingering(STANDARD_FINGERINGS_BY_NOTE[note], octave, flat),
+      fingerings: fingerings
+    })
+  }
+  handlePlusButtonClick = (e) => {
+    e.preventDefault()
+    let fingerings = this.state.fingerings.slice()
+    fingerings.push(new Fingering(0))
+    this.setState({
+      fingerings: fingerings
+    })
+  }
+  handleHover = (index) => {
+    this.setState({
+      lastHoveredFingering: index
+    })
+  }
+  handleSelectChart = (index) => {
+    this.setState({
+      selectedFingering: index
     })
   }
   render() {
-    let fingering = this.state.fingering
     return (
       <div className="App">
         <h3>EWI Fingering Tool</h3>
         <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
         <Panel>
           <NoteButtonBar handleNoteChange={this.handleNoteChange} handlePitchChange={this.handlePitchChange} />
-          <FingeringChart 
-            height="280px"
-            fingering={fingering} 
-            handleKeyClick={this.handleKeyClick} 
-            handleRollerClick={this.handleRollerClick} 
-            showNote={true}
-          />
+          {
+            this.state.fingerings.map((fingering, i) => {
+              return (
+                <FingeringChart 
+                  key={i}
+                  index={i}
+                  height="280px"
+                  fingering={fingering} 
+                  handleKeyClick={this.handleKeyClick} 
+                  handleRollerClick={this.handleRollerClick} 
+                  handleHover={this.handleHover}
+                  selectChart={this.handleSelectChart}
+                  selected={ this.state.selectedFingering === i } 
+                  showNote={true}
+                />
+              )
+            })
+          }
           <div className='plus-button'>
-            <a href="#" onClick={ () => {} }><Glyphicon glyph="plus" /></a>
+            <a href="#" onClick={ this.handlePlusButtonClick }><Glyphicon glyph="plus" /></a>
           </div>
           
         </Panel>
         <Panel>
         <AlternativeFingerings 
-          fingering={fingering} 
+          fingering={this.state.fingerings[this.state.lastHoveredFingering]} 
           fingeringsByPitch={this.fingeringsByPitch} 
           showAll={this.state.showAll} />
         </Panel>         

@@ -2,28 +2,60 @@ import React, { Component } from 'react';
 import { prettyAccidental, adjustOctave } from './Util'
 
 export default class FingeringChart extends Component {
+  constructor() {
+    super()
+    this.state = { hovered: false }
+  }
+  onMouseMove = () => {
+    if (!this.props.handleHover)
+      return
+
+    this.props.handleHover(this.props.index)
+    this.setState({ hovered: true })
+  }
+  onMouseLeave = () => {
+    this.setState({ hovered: false })
+  }
   render() {
     return (
-      <div style={{height: this.props.height, marginBottom: !this.props.showNote &&  '16px', display: 'inline-block'}}>
+      <div 
+        style={{height: this.props.height, marginBottom: !this.props.showNote &&  '16px', display: 'inline-block'}}
+        onMouseOver={ this.onMouseMove }
+        onMouseLeave={ this.onMouseLeave }
+      >
         <svg
           height="100%"
           viewBox="0 0 160 595"
           className={ this.props.readonly && 'readonly' }>
           <g id="allkeys">
             <Keys 
+              index={this.props.index}
               fingering={this.props.fingering} 
               handleKeyClick={this.props.handleKeyClick} 
             />
-            <OctaveRollers 
+            <OctaveRollers
+              index={this.props.index}
               roller={this.props.fingering.roller} 
               handleRollerClick={this.props.handleRollerClick} 
             />
           </g>
         </svg>
         { this.props.showNote && 
-          <div style={{ textAlign: 'center'}}>
-            { prettyAccidental(adjustOctave(this.props.fingering.note, this.props.fingering.roller)) }
-          </div> 
+          <div style={{ textAlign: 'center' }}>
+            <a 
+              style={{ textDecoration: this.state.hovered ? 'underline': 'none', color: 'initial'}}
+              href='#' 
+              onClick={() => this.props.selectChart(this.props.index)}>
+              { prettyAccidental(adjustOctave(this.props.fingering.note, this.props.fingering.roller)) }
+            </a> 
+            <div style={{ 
+              color: '#337ab7', 
+              fontSize: '2em', 
+              lineHeight: '12px', 
+              visibility: this.props.selected ? 'visible' : 'hidden'}}>
+              •
+            </div> 
+          </div>
         }
       </div>
     )
@@ -38,7 +70,7 @@ class Keys extends Component {
       return ''
   }
   onClick = (e) => {
-    this.props.handleKeyClick && this.props.handleKeyClick(e.target.id)
+    this.props.handleKeyClick && this.props.handleKeyClick(e.target.id, this.props.index)
   }
   render() {
     return (
@@ -128,7 +160,7 @@ class OctaveRollers extends Component {
     if (!this.props.handleRollerClick)
       return 
     let roller = Math.max(Number(e.target.id), -3)
-    this.props.handleRollerClick(roller)
+    this.props.handleRollerClick(roller, this.props.index)
   }
   render() {
     return (
