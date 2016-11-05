@@ -135,7 +135,7 @@ class AlternativeFingerings extends Component {
     return (
       <div id='alternative-fingerings'>
         <h4>
-          Alternate fingerings &nbsp;
+          Alternative fingerings &nbsp;
           <Badge>{ this.props.fingeringsByPitch[this.props.fingering.pitch].length - 1 }</Badge>
         </h4>
         { alternatives }
