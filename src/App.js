@@ -54,6 +54,10 @@ export default class App extends Component {
             handleRollerClick={this.handleRollerClick} 
             showNote={true}
           />
+          <div className='plus-button'>
+            <a href="#" onClick={ () => {} }><Glyphicon glyph="plus" /></a>
+          </div>
+          
         </Panel>
         <Panel>
         <AlternativeFingerings 

@@ -27,3 +27,17 @@
   margin-top: 68px;
   margin-left: 10px;
 }
+
+.plus-button {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 114px;
+  margin-left: 15px;
+}
+.plus-button a {
+  font-size: 1.3em;
+  color: initial;
+}
+.plus-button a:hover {
+  color: initial;
+}
