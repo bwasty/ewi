@@ -25,10 +25,10 @@ export default class App extends Component {
       }
     })
   }
-  handleNoteChange = (note) => {
+  handleNoteChange = (note, octave) => {
     let flat = note.charAt(1) === 'b'
     this.setState({
-      fingering: new Fingering(STANDARD_FINGERINGS_BY_NOTE[note], undefined, flat),
+      fingering: new Fingering(STANDARD_FINGERINGS_BY_NOTE[note], octave, flat),
     })
   }
   render() {
@@ -97,13 +97,13 @@ class NoteButtonBar extends Component {
 function NoteButton(props) {
   return (
     <div className="note-button">
-      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(props.note) }>
+      <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(props.note, props.octave) }>
         {adjustOctave(props.note, props.octave)}
       </Button>
       { !props.noSharp && 
-        <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(sharpen(props.note)) }>{SHARP}</Button> }
+        <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(sharpen(props.note), props.octave) }>{SHARP}</Button> }
       { !props.noFlat && 
-        <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(flatten(props.note)) }>{FLAT}</Button> }
+        <Button bsSize="xsmall" onClick={ () => props.handleNoteChange(flatten(props.note), props.octave) }>{FLAT}</Button> }
     </div>
   )
 }

@@ -14,7 +14,7 @@ export default class FingeringChart extends Component {
               fingering={this.props.fingering} 
               handleKeyClick={this.props.handleKeyClick} 
             />
-            <OctaveRollers visible={false}/>
+            <OctaveRollers visible={this.props.fingering.roller !== 0}/>
           </g>
         </svg>
         { this.props.showNote && 
