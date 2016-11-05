@@ -6,6 +6,7 @@ body {
 }
 
 /* SVG styling */
+
 svg path {
   fill: white;
   stroke: black;
@@ -21,4 +22,19 @@ svg path.closed {
 
 svg:not(.readonly) path:hover:not(.closed) {
   fill: lightgray
+}
+
+/* Octave rollers*/
+
+g#octave.hide-rollers path {
+  fill: transparent;
+  stroke: transparent;
+}
+
+svg:not(.readonly) g#octave:hover path {
+  stroke: darkgray;
+}
+
+svg:not(.readonly) g#octave:hover path.closed {
+  fill: black;
 }

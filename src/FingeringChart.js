@@ -39,7 +39,7 @@ class Keys extends Component {
   }
   render() {
     return (
-      <g>
+      <g id='keys'>
         <path
           id="lh1" name="Left first finger"
           className={ this.class('lh1') }
@@ -123,11 +123,8 @@ class OctaveRollers extends Component {
       return ''
   }
   render() {
-    if (this.props.roller === 0)
-      return null
-
     return (
-      <g id="octave">
+      <g id="octave" className={ this.props.roller === 0 ? 'hide-rollers' : '' }>
         <path
           className={ this.class(3) }
           d="M 12.999774,21.445836 L 35.000227,21.445836 C 37.216272,21.445836 39.000309,23.228698 39.000309,25.443284 L 39.000309,37.43563 C 39.000309,39.650216 37.216272,41.433078 35.000227,41.433078 L 12.999774,41.433078 C 10.783728,41.433078 8.9996912,39.650216 8.9996912,37.43563 L 8.9996912,25.443284 C 8.9996912,23.228698 10.783728,21.445836 12.999774,21.445836 z"
