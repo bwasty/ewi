@@ -166,9 +166,11 @@ class AlternativeFingerings extends Component {
       this.setState({showAll: false})
   }
   render() {
-    let alternatives = this.props.fingeringsByPitch[this.props.fingering.pitch]
+    const defaultNumberFingerings = 15
+    let allAlternatives = this.props.fingeringsByPitch[this.props.fingering.pitch]
+    let alternatives = allAlternatives
     if (!this.state.showAll)
-      alternatives = alternatives.slice(0, 15)
+      alternatives = alternatives.slice(0, defaultNumberFingerings)
     alternatives = alternatives
       .filter(fingering => fingering.id !== this.props.fingering.id)
       .map(fingering => <FingeringChart 
@@ -185,8 +187,8 @@ class AlternativeFingerings extends Component {
           <Badge>{ this.props.fingeringsByPitch[this.props.fingering.pitch].length - 1 }</Badge>
         </h4>
         { alternatives }
-        { !this.state.showAll && 
-        <Button bsSize="small" onClick={ () => this.setState({showAll: true}) }>•••</Button> }
+        { !this.state.showAll && defaultNumberFingerings < allAlternatives.length && 
+          <Button bsSize="small" onClick={ () => this.setState({showAll: true}) }>•••</Button> }
       </div>
     )
   }
