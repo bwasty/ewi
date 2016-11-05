@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Glyphicon, Tooltip, OverlayTrigger} from 'react-bootstrap'
+import { Button, Glyphicon, Tooltip, OverlayTrigger, Badge, Panel } from 'react-bootstrap'
 
 import './App.css';
 
@@ -22,7 +22,6 @@ export default class App extends Component {
       prev.fingering[key].toggle()
       return {
         fingering: prev.fingering,
-        showAll: false
       }
     })
   }
@@ -30,7 +29,6 @@ export default class App extends Component {
     let flat = note.charAt(1) === 'b'
     this.setState({
       fingering: new Fingering(STANDARD_FINGERINGS_BY_NOTE[note], undefined, flat),
-      showAll: false
     })
   }
   handlePitchChange = (pitch) => {
@@ -44,21 +42,21 @@ export default class App extends Component {
       <div className="App">
         <h3>EWI Fingering Tool</h3>
         <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
-        <br />
-        <ButtonBar handleNoteChange={this.handleNoteChange} handlePitchChange={this.handlePitchChange} />
-        <FingeringChart 
-          height="280px"
-          fingering={fingering} 
-          handleKeyClick={this.handleKeyClick} 
-          showNote={true}
-        />
-        <p />
+        <Panel>
+          <ButtonBar handleNoteChange={this.handleNoteChange} handlePitchChange={this.handlePitchChange} />
+          <FingeringChart 
+            height="280px"
+            fingering={fingering} 
+            handleKeyClick={this.handleKeyClick} 
+            showNote={true}
+          />
+        </Panel>
+        <Panel>
         <AlternativeFingerings 
           fingering={fingering} 
           fingeringsByPitch={this.fingeringsByPitch} 
           showAll={this.state.showAll} />
-        { !this.state.showAll && 
-          <Button bsSize="small" onClick={ () => this.setState({showAll: true}) }>More...</Button>}
+        </Panel>         
       </div>
     )
   }
@@ -101,24 +99,40 @@ function NoteButton(props) {
   )
 }
 
-function AlternativeFingerings(props) {
-  let alternatives = props.fingeringsByPitch[props.fingering.pitch]
-  if (!props.showAll)
-    alternatives = alternatives.slice(0, 15)
-  alternatives = alternatives
-    .filter(fingering => fingering.id !== props.fingering.id)
-    .map(fingering => <FingeringChart 
-                        key={fingering.id}
-                        height="180px"
-                        fingering={fingering} 
-                        readonly={true} 
-                        showNote={false} />)
+class AlternativeFingerings extends Component {
+  constructor() {
+    super()
+    this.state = {
+      showAll: false,
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.fingering.id !== nextProps.fingering.id)
+      this.setState({showAll: false})
+  }
+  render() {
+    let alternatives = this.props.fingeringsByPitch[this.props.fingering.pitch]
+    if (!this.state.showAll)
+      alternatives = alternatives.slice(0, 15)
+    alternatives = alternatives
+      .filter(fingering => fingering.id !== this.props.fingering.id)
+      .map(fingering => <FingeringChart 
+                          key={fingering.id}
+                          height="180px"
+                          fingering={fingering} 
+                          readonly={true} 
+                          showNote={false} />)
 
-  return (
-    <div>
-      Alternate fingerings: { props.fingeringsByPitch[props.fingering.pitch].length - 1 } <br />
-      Top ones: <br />
-      { alternatives }
-    </div>
-  )
+    return (
+      <div id='alternative-fingerings'>
+        <h4>
+          Alternate fingerings &nbsp;
+          <Badge>{ this.props.fingeringsByPitch[this.props.fingering.pitch].length - 1 }</Badge>
+        </h4>
+        { alternatives }
+        { !this.state.showAll && 
+        <Button bsSize="small" onClick={ () => this.setState({showAll: true}) }>•••</Button> }
+      </div>
+    )
+  }
 }

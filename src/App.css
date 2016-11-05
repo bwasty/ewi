@@ -20,3 +20,9 @@
 .note-button:not(:hover) button:not(:first-child) {
   visibility: hidden;
 }
+
+#alternative-fingerings button {
+  vertical-align: top;
+  margin-top: 68px;
+  margin-left: 10px;
+}
