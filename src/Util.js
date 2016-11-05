@@ -42,7 +42,7 @@ export function adjustOctave(note, roller) {
 
   return note
 }
-adjustOctave = _.memoize(adjustOctave)
+adjustOctave = _.memoize(adjustOctave, (note, roller) => note + roller)
 
 export function sharpen(note) {
   // Adds sharp sign at the right position.

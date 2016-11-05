@@ -11,6 +11,7 @@
 
 .note-buttons button {
   width: 24px;
+  display: block;
 }
 
 .note-button {
