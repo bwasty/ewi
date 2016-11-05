@@ -89,6 +89,15 @@ export class Fingering {
     distance(other) {
         return bitCount(this.bitmask ^ other.bitmask)
     }
+
+    applyDiff(previousFingering) {
+      for(let i = 0; i < this.keys.length; i++) {
+        if (this.keys[i].pressed && !previousFingering.keys[i].pressed)
+          this.keys[i].diff = 1
+        else if (!this.keys[i].pressed && previousFingering.keys[i].pressed)
+          this.keys[i].diff = -1
+      }
+    }
     
     get pressedKeys() {
         return this.keys.filter(k => k.pressed)
@@ -115,7 +124,7 @@ class Key {
         this.index = index
         this._pitch = pitch
         this.pressed = pressed
-
+        this.diff = 0
     }
     
     get pitch() {
@@ -126,7 +135,7 @@ class Key {
         return this.pitch === 0 && this.pressed
     }
     
-    // TODO!!: what about bitmask of parent Fingering? (press, unpress, toggle)
+    // TODO!!!: what about bitmask of parent Fingering? (press, unpress, toggle)
     press() {
         this.pressed = true
     }

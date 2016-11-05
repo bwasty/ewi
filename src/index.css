@@ -24,6 +24,14 @@ svg:not(.readonly) path:hover:not(.closed) {
   fill: lightgray
 }
 
+.diff-added {
+  fill: green !important;
+}
+
+.diff-removed {
+  fill: red !important;
+}
+
 /* Octave rollers*/
 
 g#octave.hide-rollers path {

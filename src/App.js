@@ -15,13 +15,15 @@ export default class App extends Component {
     this.state = {
       fingerings: [new Fingering(DEFAULT_BITMASK)],
       lastHoveredFingering: 0,
-      selectedFingering: 0
+      selectedFingering: 0,
+      diffMode: true // TODO!!: button to toggle
     }
     this.fingeringsByPitch = allCombinations(this.state.fingerings[0])
   }
   handleKeyClick = (key, index) => {
     this.setState((prev, props) => {
       prev.fingerings[index][key].toggle()
+      this.updateDiffs(prev.fingerings)
       return {
         fingerings: prev.fingerings,
       }
@@ -30,6 +32,7 @@ export default class App extends Component {
   handleRollerClick = (roller, index) => {
     this.setState((prev, props) => {
       prev.fingerings[index].roller = roller
+      this.updateDiffs(prev.fingerings)
       return {
         fingerings: prev.fingerings,
       }
@@ -40,6 +43,7 @@ export default class App extends Component {
     let fingerings = this.state.fingerings.slice()
     fingerings[this.state.selectedFingering] = new Fingering(
       STANDARD_FINGERINGS_BY_NOTE[note], octave, flat)
+    this.updateDiffs(fingerings)
     this.setState({
       fingerings: fingerings
     })
@@ -47,9 +51,10 @@ export default class App extends Component {
   handlePlusButtonClick = (e) => {
     e.preventDefault()
     let fingerings = this.state.fingerings.slice()
-    fingerings.push(new Fingering(0))
+    fingerings.push(new Fingering(fingerings[fingerings.length - 1].bitmask))
     this.setState({
-      fingerings: fingerings
+      fingerings: fingerings,
+      selectedFingering: fingerings.length -1,
     })
   }
   handleHover = (index) => {
@@ -61,6 +66,14 @@ export default class App extends Component {
     this.setState({
       selectedFingering: index
     })
+  }
+  updateDiffs(fingerings) {
+    if (!this.state.diffMode)
+      return
+
+    for (let i=1; i<fingerings.length; i++) {
+      fingerings[i].applyDiff(fingerings[i - 1])
+    }
   }
   render() {
     return (
