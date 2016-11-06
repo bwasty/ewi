@@ -119,6 +119,10 @@ export class Fingering {
         // NOTE: subset of hasNeutralizingKeys
         return this.rpinky1.pressed && this.rpinky2.pressed && this.rpinky3.pressed
     }
+
+    get badBisKeyUsage() {
+      return this.bis.pressed && !(this.lh1.pressed || this.lh2.pressed)
+    }
 }
 
 class Key {
@@ -158,12 +162,11 @@ class Key {
 
 
 export function allCombinations(fingering) {
-    // console.time('compute all combinations')
+    // console.time('allCombinations()')
     
     let numCombinations = 2 ** fingering.keys.length;
     let fingerings = _.times(numCombinations, bitmask => new Fingering(bitmask))
     
-    // console.timeEnd('compute all combinations')
     // console.log('combinations: ', fingerings.length)
    
     // console.time('filter out redundant')
@@ -179,6 +182,11 @@ export function allCombinations(fingering) {
     // console.time('filter out neutralizing keys')
     fingerings = fingerings.filter(fingering => !fingering.hasNeutralizingKeys)
     // console.timeEnd('filter out neutralizing keys')
+    // console.log('combinations: ', fingerings.length)
+
+    // console.time('filter out bad bis key usage')
+    fingerings = fingerings.filter(fingering => !fingering.badBisKeyUsage)
+    // console.timeEnd('filter out bad bis key usage')
     // console.log('combinations: ', fingerings.length)
     
     // console.time('group by pitch')
@@ -199,9 +207,9 @@ export function allCombinations(fingering) {
    // - distance to default fingering (smaller = better)
    // - number of 'gaps' between pressed keys?? (smaller = better)
    // - penalty for bis key?
-   
-   // TODO!!: bis key without the surrounding ones ok?
-   
+
+  //  console.timeEnd('allCombinations()')
+
    return fingeringsByPitch
 }
 
