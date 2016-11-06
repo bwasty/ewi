@@ -7,7 +7,7 @@ import {Fingering, allCombinations, STANDARD_FINGERINGS_BY_NOTE} from './Fingeri
 import FingeringChart from './FingeringChart'
 import {SHARP, FLAT, sharpen, flatten, adjustOctave, prettyAccidental} from './Util'
 
-import { setupMidi } from './Midi'
+import { setupMidi, WebMidiStatus } from './Midi'
 
 const DEFAULT_BITMASK = 0b0010000000000 // C
 
@@ -89,6 +89,7 @@ export default class App extends Component {
       <div className="App">
         <h3>EWI Fingering Tool</h3>
         <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
+        <WebMidiStatus />
         <Panel>
           {
             this.state.fingerings.map((fingering, i) => {
