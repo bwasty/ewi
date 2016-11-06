@@ -7,6 +7,8 @@ import {Fingering, allCombinations, STANDARD_FINGERINGS_BY_NOTE} from './Fingeri
 import FingeringChart from './FingeringChart'
 import {SHARP, FLAT, sharpen, flatten, adjustOctave, prettyAccidental} from './Util'
 
+import { setupMidi } from './Midi'
+
 const DEFAULT_BITMASK = 0b0010000000000 // C
 
 export default class App extends Component {
@@ -19,6 +21,8 @@ export default class App extends Component {
       diffMode: true // TODO!!: button to toggle
     }
     this.fingeringsByPitch = allCombinations(this.state.fingerings[0])
+
+    setupMidi(this)
   }
   handleKeyClick = (key, index) => {
     this.setState((prev, props) => {
