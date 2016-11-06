@@ -209,7 +209,7 @@ class AlternativeFingerings extends Component {
         </h4>
         { alternatives }
         { !this.state.showAll && defaultNumberFingerings < allAlternatives.length && 
-          <Button bsSize="small" onClick={ () => this.setState({showAll: true}) }>•••</Button> }
+          <Button bsSize="small" onClick={ () => this.setState({showAll: true}) }>&bull;&bull;&bull;</Button> }
       </div>
     )
   }

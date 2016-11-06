@@ -48,3 +48,13 @@ svg:not(.readonly) g#octave.hide-rollers:hover path {
 svg:not(.readonly) g#octave.hide-rollers:hover path.closed {
   fill: black;
 }
+
+/**/
+
+.selection-dot {
+  font-size: 2em;
+  line-height: 12px;
+}
+.note-selector:hover .selection-dot {
+  visibility: visible !important;
+}

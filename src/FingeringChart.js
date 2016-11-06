@@ -47,22 +47,31 @@ export default class FingeringChart extends Component {
         { this.props.showNote && 
           <div style={{ textAlign: 'center' }}>
             <a 
+              className='note-selector'
               style={{ 
-                textDecoration: this.state.hovered ? 'underline': 'none', 
+                textDecoration: 'none',
                 color: 'initial',
                 fontSize: '1.2em',
-                fontWeight: 'bold'}}
+                fontWeight: 'bold',
+                padding: '10px', // TODO!: half-working, improve...http://stackoverflow.com/questions/15611905/making-the-clickable-area-of-in-line-links-bigger-without-affecting-the-layout
+                margin: '-10px'
+              }}
               href='#' 
               onClick={() => this.props.selectChart(this.props.index)}>
-              { prettyAccidental(adjustOctave(this.props.fingering.note, this.props.fingering.roller)) }
+              <span style={{ textDecoration: this.state.hovered ? 'underline': 'none', }}>
+                { prettyAccidental(adjustOctave(this.props.fingering.note, this.props.fingering.roller)) }
+              </span>
+              <div 
+                className='selection-dot'
+                style={{
+                color: (this.props.selected || !this.state.hovered) ?'#337ab7' : 'darkgrey', 
+                fontSize: '2em', 
+                lineHeight: '12px', 
+                visibility: this.props.selected ? 'visible' : 'hidden'}}>
+                &bull;
+              </div> 
             </a> 
-            <div style={{ 
-              color: '#337ab7', 
-              fontSize: '2em', 
-              lineHeight: '12px', 
-              visibility: this.props.selected ? 'visible' : 'hidden'}}>
-              •
-            </div> 
+  
           </div>
         }
       </div>
