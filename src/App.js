@@ -130,7 +130,7 @@ class NoteButtonBar extends Component {
     }
   }
   changeOctave = (diff) => {
-    if ((this.state.octave > -3 || diff > 0) && (this.state.octave < 3 || diff < 0))
+    if ((this.state.octave > -2 || diff > 0) && (this.state.octave < 4 || diff < 0))
       this.setState({ octave: this.state.octave + diff })
   }
   render() {

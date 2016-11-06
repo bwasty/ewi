@@ -21,7 +21,7 @@ export class Fingering {
     rpinky2 = new Key( 1, () =>                                        -1     )
     rpinky3 = new Key( 0, () =>                                        -2     )
 
-    roller = 0 // default (middle) octave. Range: -3 to 3
+    roller = 0 // default (middle) octave. Range: -2 to 4
     
     keys = [
         this.lh1, this.bis, this.lh2, this.lh3, this.lpinky1, this.lpinky2,
