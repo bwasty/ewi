@@ -47,7 +47,11 @@ export default class FingeringChart extends Component {
         { this.props.showNote && 
           <div style={{ textAlign: 'center' }}>
             <a 
-              style={{ textDecoration: this.state.hovered ? 'underline': 'none', color: 'initial'}}
+              style={{ 
+                textDecoration: this.state.hovered ? 'underline': 'none', 
+                color: 'initial',
+                fontSize: '1.2em',
+                fontWeight: 'bold'}}
               href='#' 
               onClick={() => this.props.selectChart(this.props.index)}>
               { prettyAccidental(adjustOctave(this.props.fingering.note, this.props.fingering.roller)) }
