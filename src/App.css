@@ -5,13 +5,18 @@
 }
 
 .note-buttons {
-  float: left;
-  margin-top: 12px
+  display: inline-block;
+  margin-top: 2px;
+  margin-left: 9px;
+  vertical-align: top;
 }
 
 .note-buttons button {
-  width: 24px;
+  width: 28px;
   display: block;
+  border-radius: 12px;
+  margin-top: 1px;
+  margin-right: 1px;
 }
 
 .note-button {
@@ -32,7 +37,7 @@
   display: inline-block;
   vertical-align: top;
   margin-top: 114px;
-  margin-left: 15px;
+  margin-left: -40px;
 }
 .plus-button a {
   font-size: 1.3em;

@@ -86,7 +86,6 @@ export default class App extends Component {
         <h3>EWI Fingering Tool</h3>
         <a href="https://github.com/bwasty/ewi" style={{ fontSize: 'small'}}>GitHub</a>
         <Panel>
-          <NoteButtonBar handleNoteChange={this.handleNoteChange} handlePitchChange={this.handlePitchChange} />
           {
             this.state.fingerings.map((fingering, i) => {
               return (
@@ -106,6 +105,7 @@ export default class App extends Component {
               )
             })
           }
+          <NoteButtonBar handleNoteChange={this.handleNoteChange} handlePitchChange={this.handlePitchChange} />          
           <div className='plus-button'>
             <a href="#" onClick={ this.handlePlusButtonClick }><Glyphicon glyph="plus" /></a>
           </div>
@@ -141,13 +141,13 @@ class NoteButtonBar extends Component {
         <NoteButton note='b'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noSharp />
         <NoteButton note='a'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange}         />
         <NoteButton note='g'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange}         />
-        <div style={{height: '12px'}} />
+        <div style={{height: '18px'}} />
         <NoteButton note='f'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noFlat  />
         <NoteButton note='e'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noSharp />
         <NoteButton note='d'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange}         />
         <NoteButton note='c'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noFlat  />
         <NoteButton note='B'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noSharp />
-        <div style={{height: '12px'}} />
+        <div style={{height: '18px'}} />
         <OverlayTrigger placement="right" delay={500} overlay={ <Tooltip id="tooltip">Octave up</Tooltip> }>
           <Button bsSize="xsmall" onClick={ () => this.changeOctave(1) }><Glyphicon glyph="triangle-top" /></Button>
         </OverlayTrigger>
