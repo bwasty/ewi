@@ -5,7 +5,7 @@ import './App.css';
 
 import {Fingering, allCombinations, STANDARD_FINGERINGS_BY_NOTE} from './Fingering'
 import FingeringChart from './FingeringChart'
-import {SHARP, FLAT, sharpen, flatten, adjustOctave} from './Util'
+import {SHARP, FLAT, sharpen, flatten, adjustOctave, prettyAccidental} from './Util'
 
 const DEFAULT_BITMASK = 0b0010000000000 // C
 
@@ -57,12 +57,17 @@ export default class App extends Component {
       selectedFingering: fingerings.length -1,
     })
   }
-  handleHover = (index) => {
+  handleMouseOverFingering = (index) => {
     this.setState({
       lastHoveredFingering: index
     })
   }
-  handleSelectChart = (index) => {
+  handleMouseLeaveFingering = (index) => {
+    this.setState({
+      lastHoveredFingering: this.state.selectedFingering
+    })
+  }
+  handleSelectFingering = (index) => {
     this.setState({
       selectedFingering: index
     })
@@ -92,8 +97,9 @@ export default class App extends Component {
                   fingering={fingering} 
                   handleKeyClick={this.handleKeyClick} 
                   handleRollerClick={this.handleRollerClick} 
-                  handleHover={this.handleHover}
-                  selectChart={this.handleSelectChart}
+                  handleMouseOver={this.handleMouseOverFingering}
+                  handleMouseLeave={this.handleMouseLeaveFingering}
+                  selectChart={this.handleSelectFingering}
                   selected={ this.state.selectedFingering === i } 
                   showNote={true}
                 />
@@ -197,6 +203,8 @@ class AlternativeFingerings extends Component {
       <div id='alternative-fingerings'>
         <h4>
           Alternative fingerings &nbsp;
+          <b>{ prettyAccidental(adjustOctave(this.props.fingering.note, this.props.fingering.roller)) }</b>
+          &nbsp;&nbsp;
           <Badge>{ this.props.fingeringsByPitch[this.props.fingering.pitch].length - 1 }</Badge>
         </h4>
         { alternatives }

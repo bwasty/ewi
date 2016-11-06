@@ -7,13 +7,17 @@ export default class FingeringChart extends Component {
     this.state = { hovered: false }
   }
   onMouseMove = () => {
-    if (!this.props.handleHover)
+    if (!this.props.handleMouseOver)
       return
 
-    this.props.handleHover(this.props.index)
+    this.props.handleMouseOver(this.props.index)
     this.setState({ hovered: true })
   }
   onMouseLeave = () => {
+    if (!this.props.handleMouseLeave)
+      return
+
+    this.props.handleMouseLeave(this.props.index)
     this.setState({ hovered: false })
   }
   render() {
