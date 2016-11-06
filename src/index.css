@@ -25,11 +25,13 @@ svg:not(.readonly) path:hover:not(.closed) {
 }
 
 .diff-added {
-  fill: green !important;
+  stroke: lime;
+  stroke-width: 5;
 }
 
 .diff-removed {
-  fill: red !important;
+  stroke: red;
+  stroke-width: 5;
 }
 
 /* Octave rollers*/
