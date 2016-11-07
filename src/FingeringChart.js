@@ -21,16 +21,23 @@ export default class FingeringChart extends Component {
     this.setState({ hovered: false })
   }
   render() {
+    let mainClasses = []
+    if (this.props.readonly)
+      mainClasses.push('readonly')
+    if (this.props.selectable) 
+      mainClasses.push('hover-background')
+  
     return (
       <div
         style={{ height: this.props.height, marginBottom: !this.props.showNote && '16px', display: 'inline-block' }}
         onMouseOver={this.onMouseMove}
         onMouseLeave={this.onMouseLeave}
+        onClick={() => this.props.selectable && this.props.selectChart(this.props.fingering.bitmask)}
         >
         <svg
           height="100%"
           viewBox="0 0 160 595"
-          className={this.props.readonly && 'readonly'}>
+          className={mainClasses.join(' ')}>
           <g id="allkeys">
             <Keys
               index={this.props.index}

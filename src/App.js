@@ -76,6 +76,15 @@ export default class App extends Component {
       selectedFingering: index
     })
   }
+  handleSelectAlternateFingering = (bitmask) => {
+    this.setState((prev, props) => {
+      prev.fingerings[this.state.selectedFingering] = new Fingering(bitmask)
+      this.updateDiffs(prev.fingerings)
+      return {
+        fingerings: prev.fingerings,
+      }
+    })
+  }
   updateDiffs(fingerings) {
     if (!this.state.diffMode)
       return
@@ -120,7 +129,8 @@ export default class App extends Component {
         <AlternativeFingerings 
           fingering={this.state.fingerings[this.state.lastHoveredFingering]} 
           fingeringsByPitch={this.fingeringsByPitch} 
-          showAll={this.state.showAll} />
+          showAll={this.state.showAll} 
+          handleSelectAlternateChart={this.handleSelectAlternateFingering} />
         </Panel>         
       </div>
     )
@@ -190,7 +200,7 @@ class AlternativeFingerings extends Component {
       this.setState({ showAll: false })
   }
   render() {
-    const defaultNumberFingerings = 15
+    const defaultNumberFingerings = 17
     let allAlternatives = this.props.fingeringsByPitch[this.props.fingering.pitch]
     let alternatives = allAlternatives
     if (!this.state.showAll)
@@ -202,7 +212,9 @@ class AlternativeFingerings extends Component {
                           height="180px"
                           fingering={fingering} 
                           readonly={true} 
-                          showNote={false} />)
+                          showNote={false} 
+                          selectable={true} 
+                          selectChart={this.props.handleSelectAlternateChart}/>)
 
     return (
       <div id='alternative-fingerings'>
