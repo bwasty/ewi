@@ -94,13 +94,13 @@ export default class App extends Component {
           {
             this.state.fingerings.map((fingering, i) => {
               return (
-                <FingeringChart
+                <FingeringChart 
                   key={i}
                   index={i}
                   height="280px"
-                  fingering={fingering}
-                  handleKeyClick={this.handleKeyClick}
-                  handleRollerClick={this.handleRollerClick}
+                  fingering={fingering} 
+                  handleKeyClick={this.handleKeyClick} 
+                  handleRollerClick={this.handleRollerClick} 
                   handleMouseOver={this.handleMouseOverFingering}
                   handleMouseLeave={this.handleMouseLeaveFingering}
                   selectChart={this.handleSelectFingering}
@@ -110,18 +110,18 @@ export default class App extends Component {
               )
             })
           }
-          <NoteButtonBar handleNoteChange={this.handleNoteChange} handlePitchChange={this.handlePitchChange} />
+          <NoteButtonBar handleNoteChange={this.handleNoteChange} handlePitchChange={this.handlePitchChange} />          
           <div className='plus-button'>
             <a href="#" onClick={this.handlePlusButtonClick}><Glyphicon glyph="plus" /></a>
           </div>
 
         </Panel>
         <Panel>
-          <AlternativeFingerings
-            fingering={this.state.fingerings[this.state.lastHoveredFingering]}
-            fingeringsByPitch={this.fingeringsByPitch}
-            showAll={this.state.showAll} />
-        </Panel>
+        <AlternativeFingerings 
+          fingering={this.state.fingerings[this.state.lastHoveredFingering]} 
+          fingeringsByPitch={this.fingeringsByPitch} 
+          showAll={this.state.showAll} />
+        </Panel>         
       </div>
     )
   }
@@ -141,17 +141,17 @@ class NoteButtonBar extends Component {
   render() {
     return (
       <div className="note-buttons">
-        <NoteButton note="d'" octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} />
-        <NoteButton note="c'" octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noFlat />
-        <NoteButton note='b' octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noSharp />
-        <NoteButton note='a' octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} />
-        <NoteButton note='g' octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} />
-        <div style={{ height: '18px' }} />
-        <NoteButton note='f' octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noFlat />
-        <NoteButton note='e' octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noSharp />
-        <NoteButton note='d' octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} />
-        <NoteButton note='c' octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noFlat />
-        <NoteButton note='B' octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noSharp />
+        <NoteButton note="d'" octave={this.state.octave} handleNoteChange={this.props.handleNoteChange}         />
+        <NoteButton note="c'" octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noFlat  />
+        <NoteButton note='b'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noSharp />
+        <NoteButton note='a'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange}         />
+        <NoteButton note='g'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange}         />
+        <div style={{height: '18px'}} />
+        <NoteButton note='f'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noFlat  />
+        <NoteButton note='e'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noSharp />
+        <NoteButton note='d'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange}         />
+        <NoteButton note='c'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noFlat  />
+        <NoteButton note='B'  octave={this.state.octave} handleNoteChange={this.props.handleNoteChange} noSharp />
         <div style={{ height: '18px' }} />
         <OverlayTrigger placement="right" delay={500} overlay={<Tooltip id="tooltip">Octave up</Tooltip>}>
           <Button bsSize="xsmall" onClick={() => this.changeOctave(1)}><Glyphicon glyph="triangle-top" /></Button>
@@ -197,12 +197,12 @@ class AlternativeFingerings extends Component {
       alternatives = alternatives.slice(0, defaultNumberFingerings)
     alternatives = alternatives
       .filter(fingering => fingering.id !== this.props.fingering.id)
-      .map(fingering => <FingeringChart
-        key={fingering.id}
-        height="180px"
-        fingering={fingering}
-        readonly={true}
-        showNote={false} />)
+      .map(fingering => <FingeringChart 
+                          key={fingering.id}
+                          height="180px"
+                          fingering={fingering} 
+                          readonly={true} 
+                          showNote={false} />)
 
     return (
       <div id='alternative-fingerings'>
