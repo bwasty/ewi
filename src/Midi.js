@@ -6,7 +6,7 @@ export function setupMidi(app) {
   window.WebMidi = WebMidi
   WebMidi.enable(function (err) {
     if (err) {
-      console.error("WebMidi could not be enabled.", err);
+      WebMidi.error = err
       return
     }
 
@@ -36,7 +36,7 @@ function addListeners(app) {
 
 export function WebMidiStatus(props) {
   let statusColor = 'red'
-  let statusTooltip = 'WebMidi could not be enabled. Try with Chrome?'
+  let statusTooltip = `${WebMidi.error} Try with Chrome?`
   if (WebMidi.enabled) {
     if (WebMidi.inputs.length) {
       statusColor = 'lime'
