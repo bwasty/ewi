@@ -4,22 +4,22 @@ import { bitCount, showFlat } from './Util'
 export class Fingering {
     basePitch = 13 // C# 
     
-    lh1     = new Key(12, () =>                                        -2     )
-    bis     = new Key(11, () => this.lh1.pressed && this.lh2.pressed ?  0 : -1)
-    lh2     = new Key(10, () => this.lh1.pressed                     ? -2 : -1)
-    lh3     = new Key( 9, () =>                                        -2)
+    lh1     = new Key(12, this, () =>                                        -2     )
+    bis     = new Key(11, this, () => this.lh1._pressed && this.lh2._pressed ?  0 : -1)
+    lh2     = new Key(10, this, () => this.lh1._pressed                     ? -2 : -1)
+    lh3     = new Key( 9, this, () =>                                        -2)
     
-    lpinky1 = new Key( 8, () =>                                         1     )
-    lpinky2 = new Key( 7, () =>                                        -1     )
+    lpinky1 = new Key( 8, this, () =>                                         1     )
+    lpinky2 = new Key( 7, this, () =>                                        -1     )
     
-    rside   = new Key( 6, () => !this.lpinky1.pressed                ? +1 :  0)
-    rh1     = new Key( 5, () => !this.lh3.pressed                    ? -1 : -2)
-    rh2     = new Key( 4, () =>                                        -1     )
-    rh3     = new Key( 3, () =>                                        -2     )
+    rside   = new Key( 6, this, () => !this.lpinky1._pressed                ? +1 :  0)
+    rh1     = new Key( 5, this, () => !this.lh3._pressed                    ? -1 : -2)
+    rh2     = new Key( 4, this, () =>                                        -1     )
+    rh3     = new Key( 3, this, () =>                                        -2     )
     
-    rpinky1 = new Key( 2, () =>                                         1     )
-    rpinky2 = new Key( 1, () =>                                        -1     )
-    rpinky3 = new Key( 0, () =>                                        -2     )
+    rpinky1 = new Key( 2, this, () =>                                         1     )
+    rpinky2 = new Key( 1, this, () =>                                        -1     )
+    rpinky3 = new Key( 0, this, () =>                                        -2     )
 
     roller = 0 // default (middle) octave. Range: -2 to 4
     
@@ -51,7 +51,7 @@ export class Fingering {
     
     get pitch() {
         return this.basePitch + this.keys
-            .filter(key => key.pressed)
+            .filter(key => key._pressed)
             .map(key => key.pitch)
             .reduce((prev, cur) => prev + cur, 0)
     }
@@ -90,11 +90,17 @@ export class Fingering {
         return bitCount(this.bitmask ^ other.bitmask)
     }
 
+    updateBitmask(index, pressed) {
+      let pos = 1 << index
+      if (Boolean(this.bitmask & pos) !== pressed)
+        this.bitmask = this.bitmask ^ pos
+    }
+
     applyDiff(previousFingering) {
       for(let i = 0; i < this.keys.length; i++) {
-        if (this.keys[i].pressed && !previousFingering.keys[i].pressed)
+        if (this.keys[i]._pressed && !previousFingering.keys[i].pressed)
           this.keys[i].diff = 1
-        else if (!this.keys[i].pressed && previousFingering.keys[i].pressed)
+        else if (!this.keys[i]._pressed && previousFingering.keys[i].pressed)
           this.keys[i].diff = -1
         else 
           this.keys[i].diff = 0
@@ -102,7 +108,7 @@ export class Fingering {
     }
     
     get pressedKeys() {
-        return this.keys.filter(k => k.pressed)
+        return this.keys.filter(k => k._pressed)
     }
     
     get redundant() {
@@ -117,48 +123,50 @@ export class Fingering {
     
     get allRightPinkyKeysPressed() {
         // NOTE: subset of hasNeutralizingKeys
-        return this.rpinky1.pressed && this.rpinky2.pressed && this.rpinky3.pressed
+        return this.rpinky1._pressed && this.rpinky2._pressed && this.rpinky3._pressed
     }
 
     get badBisKeyUsage() {
-      return this.bis.pressed && !(this.lh1.pressed || this.lh2.pressed)
+      return this.bis._pressed && !(this.lh1._pressed || this.lh2._pressed)
     }
 }
 
 class Key {
-    constructor(index, pitch, pressed=false) {
+    constructor(index, fingering, pitch, pressed=false) {
         this.index = index
+        this.fingering = fingering
         this._pitch = pitch
-        this.pressed = pressed
+        this._pressed = pressed
         this.diff = 0
     }
     
     get pitch() {
         return this._pitch()
     }
-    
-    get redundant() {
-        return this.pitch === 0 && this.pressed
+
+    get pressed() {
+      return this._pressed
     }
     
-    // TODO!!!: what about bitmask of parent Fingering? (press, unpress, toggle)
+    get redundant() {
+        return this.pitch === 0 && this._pressed
+    }
+    
     press() {
-        this.pressed = true
+        this._pressed = true
+        this.fingering.updateBitmask(this.index, true)
     }
     
     unpress() {
-        this.pressed = false
+        this._pressed = false
+        this.fingering.updateBitmask(this.index, false)
     }
 
     toggle() {
-      this.pressed = !this.pressed
+      this._pressed = !this._pressed
+      this.fingering.updateBitmask(this.index, this._pressed)
     }
 }
-
-
-// function midiToPitch() {
-     
-// }
 
 
 export function allCombinations(fingering) {
