@@ -1,4 +1,4 @@
-import { bitCount, adjustOctave, showFlat, prettyAccidental, SHARP, FLAT} from './Util';
+import { bitCount, adjustOctave, showFlat, prettyAccidental, SHARP, FLAT } from './Util';
 
 test('bitCount(i)', () => {
   expect(bitCount(0b0)).toEqual(0)

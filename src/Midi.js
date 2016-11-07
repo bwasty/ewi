@@ -1,6 +1,6 @@
 import React from 'react'
 import WebMidi from 'webmidi/webmidi.min'
-import {OverlayTrigger, Tooltip} from 'react-bootstrap'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 export function setupMidi(app) {
   window.WebMidi = WebMidi
@@ -48,8 +48,8 @@ export function WebMidiStatus(props) {
     }
   }
   return (
-    <OverlayTrigger placement="bottom" overlay={ <Tooltip id="tooltip">{statusTooltip}</Tooltip> }>
-      <span style={{float: 'right', marginTop: '10px'}} >
+    <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">{statusTooltip}</Tooltip>}>
+      <span style={{ float: 'right', marginTop: '10px' }} >
         WebMidi:&nbsp;
         <span style={{ color: statusColor, fontSize: 'large' }}>&#9679;</span>
       </span>

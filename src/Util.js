@@ -70,8 +70,8 @@ export function showFlat(note) {
   let newLetter = (lowered === 'g') ?
     (letter === lowered ? 'a' : 'A') :
     String.fromCharCode(letter.charCodeAt(0) + 1)
-  
-  return  newLetter + 'b' + note.slice(2)  
+
+  return newLetter + 'b' + note.slice(2)
 }
 showFlat = _.memoize(showFlat)
 
