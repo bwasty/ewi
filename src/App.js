@@ -8,6 +8,7 @@ import FingeringChart from './FingeringChart'
 import { SHARP, FLAT, sharpen, flatten, adjustOctave, prettyAccidental } from './Util'
 
 import { setupMidi, WebMidiStatus } from './Midi'
+import { setupAbc } from './Abc'
 
 const DEFAULT_BITMASK = 0b0010000000000 // C
 
@@ -23,6 +24,7 @@ export default class App extends Component {
     this.fingeringsByPitch = allCombinations(this.state.fingerings[0])
 
     setupMidi(this)
+    setupAbc()
   }
   handleKeyClick = (key, index) => {
     this.setState((prev, props) => {

@@ -9,6 +9,7 @@
     "react-scripts": "0.7.0"
   },
   "dependencies": {
+    "abcjs": "git+https://github.com/bwasty/abcjs.git",
     "bootstrap": "^3.3.7",
     "lodash": "^4.16.5",
     "react": "^15.3.2",
