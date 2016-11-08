@@ -32,13 +32,14 @@ export class Fingering {
     this.bitmask = bitmask
     this.roller = roller
     this.flat = flat
+    this._pitch = null
 
     if (!bitmask)
       return
 
     this.keys
-      .filter(k => (bitmask & (2 ** k.index)) !== 0)
-      .forEach(k => k.press())
+      .filter(k => (bitmask & (1 << k.index)) !== 0)
+      .forEach(k => k.press(false))
   }
   
   get id() {
@@ -50,11 +51,14 @@ export class Fingering {
   }
   
   get pitch() {
-    // TODO!!: memoize?
-    return this.basePitch + this.keys
-      .filter(key => key._pressed)
-      .map(key => key.pitch)
-      .reduce((prev, cur) => prev + cur, 0)
+    if (this._pitch === null) {
+      this._pitch = this.basePitch + this.keys
+        .filter(key => key._pressed)
+        .map(key => key.pitch)
+        .reduce((prev, cur) => prev + cur, 0)
+    }
+
+    return this._pitch
   }
   
   get note() {
@@ -93,8 +97,10 @@ export class Fingering {
 
   updateBitmask(index, pressed) {
     let pos = 1 << index
-    if (Boolean(this.bitmask & pos) !== pressed)
+    if (Boolean(this.bitmask & pos) !== pressed) {
       this.bitmask = this.bitmask ^ pos
+      this._pitch = null
+    }
   }
 
   applyDiff(previousFingering) {
@@ -108,13 +114,9 @@ export class Fingering {
     }
   }
   
-  get pressedKeys() {
-    return this.keys.filter(k => k._pressed)
-  }
+  get pressedKeys() { return this.keys.filter(k => k._pressed) }
   
-  get redundant() {
-    return this.keys.some(k => k.redundant)
-  }
+  get redundant() { return this.keys.some(k => k.redundant) }
   
   get hasNeutralizingKeys() {
     let pressed = this.pressedKeys
@@ -141,21 +143,16 @@ class Key {
     this.diff = 0
   }
 
-  get pitch() {
-    return this._pitch()
-  }
+  get pitch() { return this._pitch() }
 
-  get pressed() {
-    return this._pressed
-  }
+  get pressed() { return this._pressed }
 
-  get redundant() {
-    return this.pitch === 0 && this._pressed
-  }
+  get redundant() { return this.pitch === 0 && this._pressed }
 
-  press() {
+  press(updateFingering=true) {
     this._pressed = true
-    this.fingering.updateBitmask(this.index, true)
+    if (updateFingering)
+      this.fingering.updateBitmask(this.index, true)
   }
 
   unpress() {
@@ -223,7 +220,6 @@ export function allCombinations(fingering) {
 }
 
 // Standard fingerings as found in the EWI 5000 User Guide page 39
-// TODO: verify correctness
 const STANDARD_FINGERINGS_EWI = [
   0b1011010111011, // A#
   0b1011010111001, // B
@@ -247,7 +243,6 @@ const STANDARD_FINGERINGS_EWI = [
 ]
 
 export const STANDARD_FINGERINGS_BY_NOTE = {
-  // TODO!: flat variations...
   "A#" : STANDARD_FINGERINGS_EWI[ 0], "Bb" : STANDARD_FINGERINGS_EWI[0],
   "B"  : STANDARD_FINGERINGS_EWI[ 1], "Cb" : STANDARD_FINGERINGS_EWI[1],
   "c"  : STANDARD_FINGERINGS_EWI[ 2], "B#" : STANDARD_FINGERINGS_EWI[2],
