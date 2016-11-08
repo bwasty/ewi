@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Glyphicon, Tooltip, OverlayTrigger, Badge, Panel } from 'react-bootstrap'
+import _ from 'lodash'
 
 import './App.css';
 
@@ -195,9 +196,14 @@ class AlternativeFingerings extends Component {
       showAll: false,
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if (this.props.fingering.id !== nextProps.fingering.id)
-      this.setState({ showAll: false })
+  noteModifier(fingering) {
+    let pitch = fingering.pitch
+    if (pitch < 4) 
+      return '(low)'
+    else if (pitch < 10)
+      return ''
+    else 
+      return '(high)'
   }
   render() {
     const defaultNumberFingerings = 17
@@ -206,7 +212,6 @@ class AlternativeFingerings extends Component {
     if (!this.state.showAll)
       alternatives = alternatives.slice(0, defaultNumberFingerings)
     alternatives = alternatives
-      .filter(fingering => fingering.id !== this.props.fingering.id)
       .map(fingering => <FingeringChart 
                           key={fingering.id}
                           height="180px"
@@ -217,12 +222,14 @@ class AlternativeFingerings extends Component {
                           selectChart={this.props.handleSelectAlternateChart}/>)
 
     return (
+      // TODO!!: more -> more+less button
       <div id='alternative-fingerings'>
         <h4>
-          Alternative fingerings &nbsp;
+          Fingerings for &nbsp;
           <b>{prettyAccidental(adjustOctave(this.props.fingering.note, this.props.fingering.roller))}</b>
+          &nbsp;<span style={{ fontSize: 'x-small' }}>{this.noteModifier(this.props.fingering)}</span>
           &nbsp;&nbsp;
-          <Badge>{this.props.fingeringsByPitch[this.props.fingering.pitch].length - 1}</Badge>
+          <Badge>{this.props.fingeringsByPitch[this.props.fingering.pitch].length }</Badge>
         </h4>
         {alternatives}
         {!this.state.showAll && defaultNumberFingerings < allAlternatives.length &&

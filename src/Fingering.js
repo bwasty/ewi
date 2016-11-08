@@ -50,6 +50,7 @@ export class Fingering {
   }
   
   get pitch() {
+    // TODO!!: memoize?
     return this.basePitch + this.keys
       .filter(key => key._pressed)
       .map(key => key.pitch)
