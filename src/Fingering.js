@@ -203,6 +203,11 @@ export function allCombinations(fingering) {
   for (let pitch in fingeringsByPitch) {
     if (!fingeringsByPitch.hasOwnProperty(pitch))
       continue
+    
+    // reverse to make fingerings that use more 'upper' keys appear first
+    fingeringsByPitch[pitch].reverse()
+
+    // sort by number of pressed keys 
     fingeringsByPitch[pitch] = _.sortBy(fingeringsByPitch[pitch], fingering => fingering.pressedKeys.length)
 
     // console.log(fingeringsByPitch[pitch][0].note)
