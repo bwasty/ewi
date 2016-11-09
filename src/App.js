@@ -219,6 +219,7 @@ class AlternativeFingerings extends Component {
                           readonly={true} 
                           showNote={false} 
                           selectable={true} 
+                          selected={fingering.id === this.props.fingering.id}
                           selectChart={this.props.handleSelectAlternateChart}/>)
 
     return (

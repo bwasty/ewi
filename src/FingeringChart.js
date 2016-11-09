@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+
 import { prettyAccidental, adjustOctave } from './Util'
+import { isStandardFingering } from './Fingering'
 
 export default class FingeringChart extends Component {
   constructor() {
@@ -51,7 +54,7 @@ export default class FingeringChart extends Component {
               />
           </g>
         </svg>
-        {this.props.showNote &&
+        { this.props.showNote &&
           <div style={{ textAlign: 'center' }}>
             <a
               className='note-selector'
@@ -81,6 +84,25 @@ export default class FingeringChart extends Component {
             </a>
 
           </div>
+        }
+
+        { !this.props.showNote && 
+          <OverlayTrigger placement="bottom" overlay={
+            <Tooltip id="tooltip">
+              {isStandardFingering(this.props.fingering) ? 'Standard Fingering' : 'Selected Fingering'}
+            </Tooltip>}>
+            <div
+              className='selection-dot'
+              style={{
+                textAlign: 'center',
+                color: isStandardFingering(this.props.fingering) ? 'gold' : '#337ab7',
+                fontSize: '2em',
+                lineHeight: '12px',
+                visibility: (this.props.selected || isStandardFingering(this.props.fingering)) ? 'visible' : 'hidden'
+              }}>
+              &bull;
+            </div>
+           </OverlayTrigger>
         }
       </div>
     )
