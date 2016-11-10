@@ -129,6 +129,7 @@ export default class App extends Component {
         <Panel>
         <AlternativeFingerings 
           fingering={this.state.fingerings[this.state.lastHoveredFingering]} 
+          previousFingering={this.state.fingerings[this.state.lastHoveredFingering - 1]}
           fingeringsByPitch={this.fingeringsByPitch} 
           showAll={this.state.showAll} 
           handleSelectAlternateChart={this.handleSelectAlternateFingering} />
@@ -194,6 +195,7 @@ class AlternativeFingerings extends Component {
     super()
     this.state = {
       showAll: false,
+      showDiffs: true,
     }
   }
   noteModifier(fingering) {
@@ -209,6 +211,12 @@ class AlternativeFingerings extends Component {
     const defaultNumberFingerings = 17
     let allAlternatives = this.props.fingeringsByPitch[this.props.fingering.pitch]
     let alternatives = allAlternatives
+
+    if (this.state.showDiffs && this.props.previousFingering) {
+      alternatives.forEach(fingering => fingering.applyDiff(this.props.previousFingering))
+      alternatives = _.sortBy(alternatives, fingering => fingering.distance(this.props.previousFingering))
+    }
+
     if (!this.state.showAll)
       alternatives = alternatives.slice(0, defaultNumberFingerings)
     alternatives = alternatives
