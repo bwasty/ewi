@@ -25,6 +25,21 @@ export default class App extends Component {
 
     setupMidi(this)
   }
+  componentDidMount() {
+    let query = window.location.search
+    if (_.startsWith(query, '?f=')) {
+      let fingerings = query
+        .slice(3)
+        .split(',')
+        .map(Number)
+        .map(bitmask => new Fingering(bitmask))
+      this.updateDiffs(fingerings)
+      this.setState({ fingerings: fingerings })
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    window.history.replaceState({}, '', '?f=' + this.state.fingerings.map(f => f.id).join())
+  }
   handleKeyClick = (key, index) => {
     this.setState((prev, props) => {
       prev.fingerings[index][key].toggle()
@@ -195,7 +210,7 @@ class AlternativeFingerings extends Component {
     super()
     this.state = {
       showAll: false,
-      showDiffs: true,
+      showDiffs: false,
     }
   }
   noteModifier(fingering) {
