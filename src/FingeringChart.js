@@ -67,7 +67,7 @@ export default class FingeringChart extends Component {
                 margin: '-10px'
               }}
               href='#'
-              onClick={() => this.props.selectChart(this.props.index)}>
+              onClick={(e) => { e.preventDefault(); this.props.selectChart(this.props.index) }}>
               <span style={{ textDecoration: this.state.hovered ? 'underline' : 'none', }}>
                 {prettyAccidental(adjustOctave(this.props.fingering.note, this.props.fingering.roller))}
               </span>
