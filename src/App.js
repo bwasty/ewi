@@ -46,7 +46,13 @@ export default class App extends Component {
         .map(Number)
         .map((bitmask, i) => new Fingering(bitmask, rollers[i]))
       this.updateDiffs(fingerings)
-      this.setState({ fingerings: fingerings })
+      let selectedFingering = this.state.fingerings.length > fingerings.length ? 
+        fingerings.length - 1 : this.state.selectedFingering
+      this.setState({ 
+        fingerings: fingerings, 
+        selectedFingering: selectedFingering, 
+        lastHoveredFingering: selectedFingering
+      })
     }
   }
   componentDidUpdate(prevProps, prevState) {
