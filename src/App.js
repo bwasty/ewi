@@ -26,6 +26,13 @@ export default class App extends Component {
     setupMidi(this)
   }
   componentDidMount() {
+    window.onpopstate = (e) => {
+      this.updateFromUrl()
+    }
+
+    this.updateFromUrl()
+  }
+  updateFromUrl() {
     let query = window.location.search
     if (_.startsWith(query, '?f=')) {
       let fingerings = query
@@ -38,7 +45,11 @@ export default class App extends Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    window.history.replaceState({}, '', '?f=' + this.state.fingerings.map(f => f.id).join())
+    let queryString = '?f=' + this.state.fingerings.map(f => f.id).join()
+    
+    if (queryString !== window.location.search) {
+      window.history.pushState({}, '', queryString)
+    }
   }
   handleKeyClick = (key, index) => {
     this.setState((prev, props) => {
