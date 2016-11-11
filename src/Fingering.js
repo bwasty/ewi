@@ -5,15 +5,15 @@ export class Fingering {
   basePitch = 13 // C# 
   
   lh1     = new Key(12, this, () =>                                        -2     )
-  bis     = new Key(11, this, () => this.lh1._pressed && this.lh2._pressed ?  0 : -1)
-  lh2     = new Key(10, this, () => this.lh1._pressed                     ? -2 : -1)
+  bis     = new Key(11, this, () => this.lh1.pressed && this.lh2.pressed ?  0 : -1)
+  lh2     = new Key(10, this, () => this.lh1.pressed                     ? -2 : -1)
   lh3     = new Key( 9, this, () =>                                        -2)
   
   lpinky1 = new Key( 8, this, () =>                                         1     )
   lpinky2 = new Key( 7, this, () =>                                        -1     )
   
-  rside   = new Key( 6, this, () => !this.lpinky1._pressed                ? +1 :  0)
-  rh1     = new Key( 5, this, () => !this.lh3._pressed                    ? -1 : -2)
+  rside   = new Key( 6, this, () => !this.lpinky1.pressed                ? +1 :  0)
+  rh1     = new Key( 5, this, () => !this.lh3.pressed                    ? -1 : -2)
   rh2     = new Key( 4, this, () =>                                        -1     )
   rh3     = new Key( 3, this, () =>                                        -2     )
   
@@ -33,6 +33,8 @@ export class Fingering {
     this.roller = roller
     this.flat = flat
     this._pitch = null
+
+    this.rollerDiff = 0
 
     if (!bitmask)
       return
@@ -112,6 +114,8 @@ export class Fingering {
       else 
         this.keys[i].diff = 0
     }
+
+    this.rollerDiff = this.roller - previousFingering.roller
   }
   
   get pressedKeys() { return this.keys.filter(k => k._pressed) }

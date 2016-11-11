@@ -35,17 +35,24 @@ export default class App extends Component {
   updateFromUrl() {
     let query = window.location.search
     if (_.startsWith(query, '?f=')) {
-      let fingerings = query
-        .slice(3)
+      let [fingerings, rollers] = query.slice(1).split('&')
+      rollers = rollers
+        .slice(2)
         .split(',')
         .map(Number)
-        .map(bitmask => new Fingering(bitmask))
+      fingerings = fingerings
+        .slice(2)
+        .split(',')
+        .map(Number)
+        .map((bitmask, i) => new Fingering(bitmask, rollers[i]))
       this.updateDiffs(fingerings)
       this.setState({ fingerings: fingerings })
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    let queryString = '?f=' + this.state.fingerings.map(f => f.id).join()
+    let queryString = '?f=' + this.state.fingerings.map(f => f.id).join() +
+      '&r=' +  this.state.fingerings.map(f => f.roller).join()
+    
     
     if (queryString !== window.location.search) {
       window.history.pushState({}, '', queryString)
@@ -82,7 +89,8 @@ export default class App extends Component {
   handlePlusButtonClick = (e) => {
     e.preventDefault()
     let fingerings = this.state.fingerings.slice()
-    fingerings.push(new Fingering(fingerings[fingerings.length - 1].bitmask))
+    let lastFingering = fingerings[fingerings.length - 1]
+    fingerings.push(new Fingering(lastFingering.bitmask, lastFingering.roller, lastFingering.flat))
     this.setState({
       fingerings: fingerings,
       selectedFingering: fingerings.length - 1,
@@ -221,7 +229,7 @@ class AlternativeFingerings extends Component {
     super()
     this.state = {
       showAll: false,
-      showDiffs: false,
+      showDiffs: true,
     }
   }
   noteModifier(fingering) {
