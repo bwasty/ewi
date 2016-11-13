@@ -51,6 +51,7 @@ export default class FingeringChart extends Component {
               index={this.props.index}
               roller={this.props.fingering.roller}
               rollerDiff={this.props.fingering.rollerDiff}
+              showRollers={this.props.fingering.roller !== 0 && this.props.index === 0}
               handleRollerClick={this.props.handleRollerClick}
               />
           </g>
@@ -96,7 +97,7 @@ export default class FingeringChart extends Component {
               className='selection-dot'
               style={{
                 textAlign: 'center',
-                color: isStandardFingering(this.props.fingering) ? 'gold' : '#337ab7',
+                color: isStandardFingering(this.props.fingering) && !this.props.selected ? 'gold' : '#337ab7',
                 fontSize: '2em',
                 lineHeight: '12px',
                 visibility: (this.props.selected || isStandardFingering(this.props.fingering)) ? 'visible' : 'hidden'
@@ -230,9 +231,12 @@ class OctaveRollers extends Component {
     let roller = Math.max(Number(e.target.id), -2)
     this.props.handleRollerClick(roller, this.props.index)
   }
+  showRollers() {
+    return this.props.showRollers || this.props.rollerDiff !== 0
+  }
   render() {
     return (
-      <g id="octave" className={this.props.rollerDiff === 0 ? 'hide-rollers' : ''}>
+      <g id="octave" className={this.showRollers() ? '' : 'hide-rollers'}>
         <path
           id="4" className={this.classes(4)}
           onClick={this.onClick}
