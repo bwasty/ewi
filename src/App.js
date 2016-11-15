@@ -253,7 +253,7 @@ class AlternativeFingerings extends Component {
     let alternatives = allAlternatives
 
     if (this.state.showDiffs && this.props.previousFingering) {
-      alternatives.forEach(fingering => fingering.applyDiff(this.props.previousFingering))
+      alternatives.forEach(fingering => fingering.applyDiff(this.props.previousFingering, false))
       alternatives = _.sortBy(alternatives, fingering => fingering.distance(this.props.previousFingering))
     }
 
@@ -274,7 +274,7 @@ class AlternativeFingerings extends Component {
       // TODO!!: more -> more+less button
       <div id='alternative-fingerings'>
         <h4>
-          Fingerings for &nbsp;
+          Alternate Fingerings for &nbsp;
           <b>{prettyAccidental(adjustOctave(this.props.fingering.note, this.props.fingering.roller))}</b>
           &nbsp;<span style={{ fontSize: 'x-small' }}>{this.noteModifier(this.props.fingering)}</span>
           &nbsp;&nbsp;

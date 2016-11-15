@@ -105,7 +105,7 @@ export class Fingering {
     }
   }
 
-  applyDiff(previousFingering) {
+  applyDiff(previousFingering, includeRoller=true) {
     for(let i = 0; i < this.keys.length; i++) {
       if (this.keys[i]._pressed && !previousFingering.keys[i].pressed)
         this.keys[i].diff = 1
@@ -115,7 +115,8 @@ export class Fingering {
         this.keys[i].diff = 0
     }
 
-    this.rollerDiff = this.roller - previousFingering.roller
+    if (includeRoller)
+      this.rollerDiff = this.roller - previousFingering.roller
   }
   
   get pressedKeys() { return this.keys.filter(k => k._pressed) }
