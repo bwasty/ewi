@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react'
 import { Button, Glyphicon, Tooltip, OverlayTrigger, Badge, Panel } from 'react-bootstrap'
 import _ from 'lodash'
@@ -46,11 +47,11 @@ export default class App extends Component {
         .map(Number)
         .map((bitmask, i) => new Fingering(bitmask, rollers[i]))
       this.updateDiffs(fingerings)
-      let selectedFingering = this.state.fingerings.length > fingerings.length ? 
+      let selectedFingering = this.state.fingerings.length > fingerings.length ?
         fingerings.length - 1 : this.state.selectedFingering
-      this.setState({ 
-        fingerings: fingerings, 
-        selectedFingering: selectedFingering, 
+      this.setState({
+        fingerings: fingerings,
+        selectedFingering: selectedFingering,
         lastHoveredFingering: selectedFingering
       })
     }
@@ -58,8 +59,8 @@ export default class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     let queryString = '?f=' + this.state.fingerings.map(f => f.id).join() +
       '&r=' +  this.state.fingerings.map(f => f.roller).join()
-    
-    
+
+
     if (queryString !== window.location.search) {
       window.history.pushState({}, '', queryString)
     }
@@ -144,13 +145,13 @@ export default class App extends Component {
           {
             this.state.fingerings.map((fingering, i) => {
               return (
-                <FingeringChart 
+                <FingeringChart
                   key={i}
                   index={i}
                   height="280px"
-                  fingering={fingering} 
-                  handleKeyClick={this.handleKeyClick} 
-                  handleRollerClick={this.handleRollerClick} 
+                  fingering={fingering}
+                  handleKeyClick={this.handleKeyClick}
+                  handleRollerClick={this.handleRollerClick}
                   handleMouseOver={this.handleMouseOverFingering}
                   handleMouseLeave={this.handleMouseLeaveFingering}
                   selectChart={this.handleSelectFingering}
@@ -160,20 +161,20 @@ export default class App extends Component {
               )
             })
           }
-          <NoteButtonBar handleNoteChange={this.handleNoteChange} handlePitchChange={this.handlePitchChange} />          
+          <NoteButtonBar handleNoteChange={this.handleNoteChange} handlePitchChange={this.handlePitchChange} />
           <div className='plus-button'>
             <a href="#" onClick={this.handlePlusButtonClick}><Glyphicon glyph="plus" /></a>
           </div>
 
         </Panel>
         <Panel>
-        <AlternativeFingerings 
-          fingering={this.state.fingerings[this.state.lastHoveredFingering]} 
+        <AlternativeFingerings
+          fingering={this.state.fingerings[this.state.lastHoveredFingering]}
           previousFingering={this.state.fingerings[this.state.lastHoveredFingering - 1]}
-          fingeringsByPitch={this.fingeringsByPitch} 
-          showAll={this.state.showAll} 
+          fingeringsByPitch={this.fingeringsByPitch}
+          showAll={this.state.showAll}
           handleSelectAlternateChart={this.handleSelectAlternateFingering} />
-        </Panel>         
+        </Panel>
       </div>
     )
   }
@@ -240,11 +241,11 @@ class AlternativeFingerings extends Component {
   }
   noteModifier(fingering) {
     let pitch = fingering.pitch
-    if (pitch < 4) 
+    if (pitch < 4)
       return '(low)'
     else if (pitch < 10)
       return ''
-    else 
+    else
       return '(high)'
   }
   render() {
@@ -260,13 +261,13 @@ class AlternativeFingerings extends Component {
     if (!this.state.showAll)
       alternatives = alternatives.slice(0, defaultNumberFingerings)
     alternatives = alternatives
-      .map(fingering => <FingeringChart 
+      .map(fingering => <FingeringChart
                           key={fingering.id}
                           height="180px"
-                          fingering={fingering} 
-                          readonly={true} 
-                          showNote={false} 
-                          selectable={true} 
+                          fingering={fingering}
+                          readonly={true}
+                          showNote={false}
+                          selectable={true}
                           selected={fingering.id === this.props.fingering.id}
                           selectChart={this.props.handleSelectAlternateChart}/>)
 

@@ -5,8 +5,8 @@
   "license": "MIT",
   "homepage": "http://ewi.malkut.net",
   "devDependencies": {
-    "gh-pages": "^0.11.0",
-    "react-scripts": "0.7.0"
+    "gh-pages": "^2.0.1",
+    "react-scripts": "^3.0.1"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
@@ -28,5 +28,17 @@
     "rules": {
       "guard-for-in": "warn"
     }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

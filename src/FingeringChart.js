@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
@@ -27,9 +28,9 @@ export default class FingeringChart extends Component {
     let mainClasses = []
     if (this.props.readonly)
       mainClasses.push('readonly')
-    if (this.props.selectable) 
+    if (this.props.selectable)
       mainClasses.push('hover-background')
-  
+
     return (
       <div
         style={{ height: this.props.height, marginBottom: !this.props.showNote && '16px', display: 'inline-block' }}
@@ -88,7 +89,7 @@ export default class FingeringChart extends Component {
           </div>
         }
 
-        { !this.props.showNote && 
+        { !this.props.showNote &&
           <OverlayTrigger placement="bottom" overlay={
             <Tooltip id="tooltip">
               {isStandardFingering(this.props.fingering) ? 'Standard Fingering' : 'Selected Fingering'}
@@ -209,7 +210,7 @@ class OctaveRollers extends Component {
     let classes = []
     if (this.props.roller === roller || this.props.roller === roller + 1)
       classes.push('closed')
-    
+
     if (this.props.rollerDiff > 0) {
       if (this.props.roller === roller)
         classes.push('diff-added')
@@ -222,7 +223,7 @@ class OctaveRollers extends Component {
       else if (this.props.roller === roller - 1)
         classes.push('diff-removed')
     }
-    
+
     return classes.join(' ')
   }
   onClick = (e) => {
