@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import { bitCount, showFlat } from './Util'
 
+const NUM_KEYS = 13
+
 export class Fingering {
   basePitch = 13 // C# 
   
@@ -172,38 +174,20 @@ class Key {
 }
 
 
-export function allCombinations(fingering) {
+export function allCombinations() {
   // console.time('allCombinations()')
 
-  let numCombinations = 2 ** fingering.keys.length;
+  let numCombinations = 2 ** NUM_KEYS;
   let fingerings = _.times(numCombinations, bitmask => new Fingering(bitmask))
 
-  // console.log('combinations: ', fingerings.length)
-
-  // console.time('filter out redundant')
   fingerings = fingerings.filter(fingering => !fingering.redundant)
-  // console.timeEnd('filter out redundant')
-  // console.log('combinations: ', fingerings.length)
-
-  // console.time('filter out allRightPinkyKeysPressed')
   fingerings = fingerings.filter(fingering => !fingering.allRightPinkyKeysPressed)
-  // console.timeEnd('filter out allRightPinkyKeysPressed')
-  // console.log('combinations: ', fingerings.length)
-
-  // console.time('filter out neutralizing keys')
   fingerings = fingerings.filter(fingering => !fingering.hasNeutralizingKeys)
-  // console.timeEnd('filter out neutralizing keys')
-  // console.log('combinations: ', fingerings.length)
-
-  // console.time('filter out bad bis key usage')
   fingerings = fingerings.filter(fingering => !fingering.badBisKeyUsage)
-  // console.timeEnd('filter out bad bis key usage')
-  // console.log('combinations: ', fingerings.length)
 
-  // console.time('group by pitch')
+  console.log('combinations: ', fingerings.length)
+
   let fingeringsByPitch = _.groupBy(fingerings, fingering => fingering.pitch)
-  // console.log(fingeringsByPitch)
-  // console.timeEnd('group by pitch')
 
   for (let pitch in fingeringsByPitch) {
     if (!fingeringsByPitch.hasOwnProperty(pitch))
@@ -214,18 +198,9 @@ export function allCombinations(fingering) {
 
     // sort by number of pressed keys 
     fingeringsByPitch[pitch] = _.sortBy(fingeringsByPitch[pitch], fingering => fingering.pressedKeys.length)
-
-    // console.log(fingeringsByPitch[pitch][0].note)
-    // console.log(fingeringsByPitch[pitch].slice(0,5).map(ewi => `${ewi.id}, ${ewi.pressedKeys.length}]`))
   }
 
-  // TODO!: further/different sort criteria...
-  // - distance to default fingering (smaller = better)
-  // - number of 'gaps' between pressed keys?? (smaller = better)
-  // - penalty for bis key?
-
   //  console.timeEnd('allCombinations()')
-
   return fingeringsByPitch
 }
 
@@ -276,4 +251,12 @@ export const STANDARD_FINGERINGS_BY_NOTE = {
 
 export function isStandardFingering(fingering) {
   return STANDARD_FINGERINGS_EWI.indexOf(fingering.bitmask) !== -1
+}
+
+class AllFingerings {
+  // static fingeringsByPitch = allCombinations()
+
+  static getAlternatives(pitch, includeDifferentRoller=false) {
+    
+  }
 }
