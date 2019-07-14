@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: ewi
 spec:
+  type: NodePort
   ports:
-  - port: 8080
+  - protocol: TCP
+    port: 8080
     targetPort: 80
-  type: LoadBalancer
   selector:
     app: ewi

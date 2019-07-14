@@ -8,3 +8,4 @@ deploy:
     manifests:
     - web-deployment.yaml
     - web-service.yaml
+    - web-ingress.yaml
