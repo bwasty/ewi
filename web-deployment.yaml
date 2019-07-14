@@ -1,27 +1,27 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.18.0 (06a2e56)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: web
-  name: web
+  name: ewi
 spec:
+  selector:
+    matchLabels:
+      app: ewi
   replicas: 1
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: web
+        app: ewi
     spec:
       containers:
-      - image: web
-        name: web
+      - image: ewi
+        name: ewi
         ports:
         - containerPort: 80
-        resources: {}
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
       restartPolicy: Always
-status: {}
