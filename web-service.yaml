@@ -3,10 +3,16 @@ kind: Service
 metadata:
   name: ewi
 spec:
-  type: NodePort
+  selector:
+    app: ewi
+
   ports:
   - protocol: TCP
     port: 8080
     targetPort: 80
-  selector:
-    app: ewi
+  # type: NodePort
+  # Alternative without ingress, ergo free (load balancer costs 20$/month...), but no auto HTTPS...
+  # -> https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip#step_2_expose_your_application
+  # NOTE: ip must be REGIONAL, not global...
+  type: LoadBalancer
+  loadBalancerIP: "34.90.89.137" # = ewi-ip-address-regional
